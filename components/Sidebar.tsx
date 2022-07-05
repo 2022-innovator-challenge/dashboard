@@ -30,7 +30,7 @@ export default function LeftNavbar(props: SidebarProps) {
     return (
         <nav className='sidebar'>
             <ul className='sidebar-list'>
-                {sidebarElements.map( (element) =>
+                {sidebarElements.map(element =>
                     <li 
                         key={element.name}
                         onClick={() => handleSelect(element.name)}
