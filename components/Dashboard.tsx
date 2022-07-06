@@ -50,30 +50,29 @@ export default function Dashboard() {
     const dataEndpoint = "https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats"
     const { data, error } = useSWR(dataEndpoint, fetcher, { refreshInterval:300000 });
 
-
-    const crawlerResponeses = (data as CrawlerResponse[]);
+    const crawlerResponses = (data as CrawlerResponse[]);
 
     if (error) return <div>failed to load</div>
     if (!data) return <div>loading...</div>
 
-    const labels = [...new Set<string>(crawlerResponeses.map(objectElement => objectElement.date))];
+    const labels = [...new Set<string>(crawlerResponses.map(objectElement => objectElement.date))];
 
     const dataSets: DatasetElement[] = [];
 
     for(let i=0; i<7; i++) {
         const dataSet: number[] = [];
         for(let j = i; j<data.length; j=j+7) {
-            dataSet.push(crawlerResponeses[j].downloads)
+            dataSet.push(crawlerResponses[j].downloads)
         }
         dataSets.push({
-            label: `${crawlerResponeses[i].package} Version ${crawlerResponeses[i].version}`,
+            label: `${crawlerResponses[i].package} Version ${crawlerResponses[i].version}`,
             backgroundColor: colorPalette[i],
             borderColor: colorPalette[i],
             data: dataSet
         })
     }
     
-      const defaultData = {
+      const chartData = {
         labels: labels,
         datasets: dataSets
       };
@@ -90,7 +89,7 @@ export default function Dashboard() {
       
       return (
         <div>
-            <Line data={defaultData}/>
+            <Line data={chartData}/>
             <button onClick={() => {
                 mutate(dataEndpoint)
             }}>
