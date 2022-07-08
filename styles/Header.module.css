@@ -1,0 +1,12 @@
+.header {
+    display: inline-block;
+}
+
+.headerList > li {
+    display: inline-block;
+    margin: 10px;
+}
+
+.header > p {
+    display: inline-block;
+}

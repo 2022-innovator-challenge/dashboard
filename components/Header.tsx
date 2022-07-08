@@ -1,4 +1,5 @@
 import Link from "next/link";
+import styles from '../styles/Header.module.css';
 
 type HeaderProps = {
     unselectSidebar: () => void
@@ -11,12 +12,12 @@ export default function Header(props: HeaderProps) {
     // get user- and projectname 
     return (
         <div>
-            <p>{`Hey Steve I hope you're having fun workin on Cool Project 123!`}</p>
-            <nav className='header'>
-                <ul className='header-list'>
+            <nav className={styles.header}>
+                <p>{`Hey Steve I hope you're having fun workin on Cool Project 123!`}</p>
+                <ul className={styles.headerList}>
                     <li>
                         <Link
-                            href='/settings'
+                            href='/settings/user'
                         >
                             <a onClick={unselectSidebar}>Settings</a>
                         </Link>

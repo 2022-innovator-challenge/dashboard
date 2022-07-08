@@ -28,8 +28,8 @@ export default function LeftNavbar(props: SidebarProps) {
       }
 
     return (
-        <nav className='sidebar'>
-            <ul className='sidebar-list'>
+        <nav className={styles.sidebar}>
+            <ul className={styles.sidebarList}>
                 {sidebarElements.map(element =>
                     <li 
                         key={element.name}

@@ -45,6 +45,7 @@ const colorPalette = [
     'rgb(255, 103, 146)'
 ]
 
+// improve API to work with random orders and missing data entries
 export default function Dashboard() {
 
     const dataEndpoint = "https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats"
@@ -56,6 +57,7 @@ export default function Dashboard() {
     if (!data) return <div>loading...</div>
 
     const labels = [...new Set<string>(crawlerResponses.map(objectElement => objectElement.date))];
+    const packages = [...new Set<string>(crawlerResponses.map(objectElement => `${objectElement.package} Version ${objectElement.version}`))];
 
     const dataSets: DatasetElement[] = [];
 
