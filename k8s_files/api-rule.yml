@@ -1,0 +1,19 @@
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: dashboard-api-rule
+  labels:
+    app: dashboard
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  service:
+    name: dashboard-service
+    host: dashboard
+    port: 3000
+  rules:
+    - path: /.*
+      methods: ['GET', 'POST', 'DELETE']
+      mutators: []
+      accessStrategies:
+        - handler: noop
+          config: {}

@@ -42,7 +42,8 @@ const colorPalette = [
     'rgb(114, 110, 183)',
     'rgb(168, 107, 186)',
     'rgb(218, 102, 172)',
-    'rgb(255, 103, 146)'
+    'rgb(255, 103, 146)',
+    'rgb(255, 115, 186)'
 ]
 
 // improve API to work with random orders and missing data entries
@@ -56,23 +57,55 @@ export default function Dashboard() {
     if (error) return <div>failed to load</div>
     if (!data) return <div>loading...</div>
 
-    const labels = [...new Set<string>(crawlerResponses.map(objectElement => objectElement.date))];
-    const packages = [...new Set<string>(crawlerResponses.map(objectElement => `${objectElement.package} Version ${objectElement.version}`))];
+    const labels = [...new Set<string>(crawlerResponses.map(crawlerResponse => crawlerResponse.date))];
 
     const dataSets: DatasetElement[] = [];
 
-    for(let i=0; i<7; i++) {
-        const dataSet: number[] = [];
-        for(let j = i; j<data.length; j=j+7) {
-            dataSet.push(crawlerResponses[j].downloads)
+    const parsedResponses = new Map<string, { date: Date, downloads: number }[]>();
+    crawlerResponses.map(crawlerResponse => {
+        if (parsedResponses.has(`${crawlerResponse.package} Version ${crawlerResponse.version}`)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const packageData = parsedResponses.get(`${crawlerResponse.package} Version ${crawlerResponse.version}`)!;
+            packageData.push({ date: new Date(crawlerResponse.date), downloads: crawlerResponse.downloads })
+            parsedResponses.set(`${crawlerResponse.package} Version ${crawlerResponse.version}`, packageData)
+        } else {
+            parsedResponses.set(
+                `${crawlerResponse.package} Version ${crawlerResponse.version}`,
+                [{ date: new Date(crawlerResponse.date), downloads: crawlerResponse.downloads }]
+            )
         }
+    })
+
+    type downloadsAndDate = { date: Date, downloads: number }
+    parsedResponses.forEach(element => element.sort(function(a: downloadsAndDate, b: downloadsAndDate) {
+        return b.date.getTime() + a.date.getTime();
+    }))
+
+    let iterator = 0;
+    parsedResponses.forEach((element, key) => {
+
+        const downloadNumbersArray: number[] = [];
+
+        for(let i=0, j=0; i<labels.length; i++) {
+            if(element[j]?.date.getTime() === new Date(labels[i]).getTime()) {
+                downloadNumbersArray.push(element[j].downloads)
+                j++;
+            } else {
+                console.log(`Label: ${new Date(labels[i])}`);
+                console.log(`Date: ${element[j]?.date}`);
+                downloadNumbersArray.push(0);
+            }
+        }
+
         dataSets.push({
-            label: `${crawlerResponses[i].package} Version ${crawlerResponses[i].version}`,
-            backgroundColor: colorPalette[i],
-            borderColor: colorPalette[i],
-            data: dataSet
+            label: key,
+            backgroundColor: colorPalette[iterator],
+            borderColor: colorPalette[iterator],
+            data: downloadNumbersArray
         })
-    }
+        iterator++;
+    })
+    iterator=0;
     
       const chartData = {
         labels: labels,
