@@ -91,8 +91,6 @@ export default function Dashboard() {
                 downloadNumbersArray.push(element[j].downloads)
                 j++;
             } else {
-                console.log(`Label: ${new Date(labels[i])}`);
-                console.log(`Date: ${element[j]?.date}`);
                 downloadNumbersArray.push(0);
             }
         }
