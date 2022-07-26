@@ -10,13 +10,11 @@
 }
 
 #header {
-    display: flex;
     grid-area: header;
     background-color: #6fffd2;
 }
 
 #sidebar {
-    display:flex;
     grid-area: sidebar;
     background-color: #64ffda;
 }

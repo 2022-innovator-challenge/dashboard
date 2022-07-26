@@ -2,13 +2,15 @@
     font-weight: bold;
 }
 
-.navbar {
+.sidebarList {
+    list-style: none;
+}
+.sidebarList > li {
+}
+
+.sidebar {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-}
-
-.sidebarList {
-    list-style: none;
 }
