@@ -26,7 +26,7 @@ type DatasetElement = {
     label: string,
     backgroundColor: string,
     borderColor: string,
-    data: number[]
+    data: (number|null)[]
 }
 
 const fetcher = async (url: string) => {
@@ -61,7 +61,8 @@ export default function Dashboard() {
 
     const dataSets: DatasetElement[] = [];
 
-    const parsedResponses = new Map<string, { date: Date, downloads: number }[]>();
+    type downloadsAndDate = { date: Date, downloads: number }
+    const parsedResponses = new Map<string, downloadsAndDate[]>();
     crawlerResponses.map(crawlerResponse => {
         if (parsedResponses.has(`${crawlerResponse.package} Version ${crawlerResponse.version}`)) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -76,7 +77,6 @@ export default function Dashboard() {
         }
     })
 
-    type downloadsAndDate = { date: Date, downloads: number }
     parsedResponses.forEach(element => element.sort(function(a: downloadsAndDate, b: downloadsAndDate) {
         return b.date.getTime() + a.date.getTime();
     }))
@@ -84,14 +84,14 @@ export default function Dashboard() {
     let iterator = 0;
     parsedResponses.forEach((element, key) => {
 
-        const downloadNumbersArray: number[] = [];
+        const downloadNumbersArray: (number|null)[] = [];
 
         for(let i=0, j=0; i<labels.length; i++) {
             if(element[j]?.date.getTime() === new Date(labels[i]).getTime()) {
                 downloadNumbersArray.push(element[j].downloads)
                 j++;
             } else {
-                downloadNumbersArray.push(0);
+                downloadNumbersArray.push(null);
             }
         }
 

@@ -25,7 +25,7 @@ export default function LeftNavbar(props: SidebarProps) {
                 : { ...element, isSelected: false }
             ))
         )
-      }
+    }
 
     return (
         <nav className={styles.sidebar}>

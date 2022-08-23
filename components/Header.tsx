@@ -13,7 +13,7 @@ export default function Header(props: HeaderProps) {
     return (
         <div>
             <nav className={styles.header}>
-                <p>{`Hey Steve I hope you're having fun workin on Cool Project 123!`}</p>
+                <p className={styles.projectName}>{`Overcooked`}</p>
                 <ul className={styles.headerList}>
                     <li>
                         <Link

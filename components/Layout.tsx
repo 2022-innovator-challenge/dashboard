@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
     const [sidebarElements, setSidebarElements] = useState([
         { name: 'Home', isSelected: true, link: '/' },
-        { name: 'Dashboards', isSelected: false, link: '/dashboards' },
+        { name: 'Dashboard', isSelected: false, link: '/dashboard' },
         { name: 'Automations', isSelected: false, link: '/automations' },
         { name: 'Settings ', isSelected: false, link: '/settings/project' }
     ]);
@@ -19,20 +19,22 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
 
   return (
-    <div className={styles.grid}>
-      <div id={styles.header}>
+    <div className={styles.flexWrapper}>
+       <div id={styles.header}>
         <Header
           unselectSidebar={unselectSidebar}
         />
       </div>
-      <div id={styles.sidebar}>
-        <Sidebar 
-          sidebarElements={sidebarElements}
-          setSidebarElements={setSidebarElements}
-        />
-      </div>
-      <div id={styles.children}>
-        {children}
+      <div className={styles.bottomContainer}>
+        <div id={styles.sidebar}>
+          <Sidebar 
+            sidebarElements={sidebarElements}
+            setSidebarElements={setSidebarElements}
+          />
+        </div>
+        <div id={styles.children}>
+          {children}
+        </div>
       </div>
     </div>
   );

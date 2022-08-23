@@ -1,12 +1,12 @@
 .header {
-    display: inline-block;
+    display: flex;
 }
 
-.headerList > li {
-    display: inline-block;
-    margin: 10px;
+.projectName {
+    justify-content: center;
+    align-items: center;
 }
 
-.header > p {
-    display: inline-block;
+.headerList {
+    left: 0px;
 }
