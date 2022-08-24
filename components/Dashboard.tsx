@@ -57,7 +57,7 @@ export default function Dashboard() {
     if (error) return <div>failed to load</div>
     if (!data) return <div>loading...</div>
 
-    const labels = [...new Set<string>(crawlerResponses.map(crawlerResponse => crawlerResponse.date))];
+    const labels = [...new Set<string>(crawlerResponses.map(crawlerResponse => crawlerResponse.date))].sort((a, b) => a.localeCompare(b));
 
     const dataSets: DatasetElement[] = [];
 
@@ -78,7 +78,7 @@ export default function Dashboard() {
     })
 
     parsedResponses.forEach(element => element.sort(function(a: downloadsAndDate, b: downloadsAndDate) {
-        return b.date.getTime() + a.date.getTime();
+        return a.date.getTime() - b.date.getTime();
     }))
 
     let iterator = 0;

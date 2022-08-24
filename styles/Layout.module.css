@@ -7,19 +7,19 @@
 .bottomContainer {
     display: flex;
     flex-direction: row;
-    min-height: 100%;
 }
 
 #header {
     background-color: #6fffd2;
     position: sticky;
     top: 0px;
+    height: 70px;
 }
 
 #sidebar {
-    background-color: #64ffda;
-    width: 9%;
-    height: 50vh;
+    background-color: #3a7dda;
+    min-width: 110px;
+    height: calc(100vh - 70px);
     position: -webkit-sticky;
     position: sticky;
     justify-content: center;
@@ -28,5 +28,5 @@
 
 #children {
     background-color: #73ffba;
-    width: 91%;
+    width: calc(100% - 110px);
 }
