@@ -13,23 +13,28 @@ export default function Header(props: HeaderProps) {
     return (
         <div>
             <nav className={styles.header}>
-                <p className={styles.projectName}>{`Overcooked`}</p>
-                <ul className={styles.headerList}>
-                    <li>
-                        <Link
-                            href='/settings/user'
-                        >
-                            <a onClick={unselectSidebar}>Settings</a>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link 
-                            href='/logout'
-                        >
-                            <a onClick={unselectSidebar}>Logout</a>
-                        </Link>
-                    </li>
-                </ul>
+                <div className="emptyDiv"></div>
+                <div className={styles.projectName}>
+                    <p>{`Overcooked`}</p>
+                </div>
+                <div className={styles.headerButton}>
+                    <ul className={styles.headerList}>
+                        <li>
+                            <Link
+                                href='/settings/user'
+                            >
+                                <a onClick={unselectSidebar}>Settings</a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link 
+                                href='/logout'
+                            >
+                                <a onClick={unselectSidebar}>Logout</a>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
     )
