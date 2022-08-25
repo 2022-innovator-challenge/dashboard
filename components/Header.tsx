@@ -21,7 +21,7 @@ export default function Header(props: HeaderProps) {
                 <div className={styles.rightHeader}>
                     <div className={styles.dropdown}>
                         <div className={styles.dropdownBtn}>
-                            <Image src="/settings.png" alt="me" width="30" height="30" />
+                            <Image src="/settings.png" alt="settings" width="30" height="30" />
                         </div>
                         <div className={styles.dropdownContent}>
                             <Link

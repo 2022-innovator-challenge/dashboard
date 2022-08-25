@@ -1,0 +1,66 @@
+.grid {
+    grid-template-areas:
+    "prs prs stars stars issues issues"
+    "npmDownloads npmDownloads npmDownloads npmDownloads prResponseTime prResponseTime"
+    "githubPipeline githubPipeline githubPipeline jenkinsPipeline jenkinsPipeline jenkinsPipeline";
+    grid-template-columns: repeat(6, 1fr);
+    display: grid;
+}
+
+.prs {
+    grid-area: prs;
+    height: 100px;
+    background-color: rgb(255, 238, 0);
+    display: flex;
+}
+
+.stars {
+    grid-area: stars;
+    height: 100px;
+    background-color: rgb(180, 30, 30);
+}
+
+.issues {
+    grid-area: issues;
+    height: 100px;
+    background-color: rgb(81, 209, 31);
+}
+
+.npmDownloads {
+    grid-area: npmDownloads;
+    height: 400px;
+    background-color: rgb(24, 227, 180);
+}
+
+.prResponseTime {
+    grid-area: prResponseTime;
+    height: 100px;
+    background-color: rgb(20, 131, 216);
+}
+
+.githubPipeline {
+    grid-area: githubPipeline;
+    height: 100px;
+    background-color: rgb(151, 19, 212);
+}
+
+.jenkinsPipeline {
+    grid-area: jenkinsPipeline;
+    height: 100px;
+    background-color: rgb(90, 9, 31);
+}
+
+/**
+ <div className={styles.grid}>
+    <div className={styles.stars}></div>
+    <div className={styles.prs}></div>
+    <div className={styles.issues}></div>
+    <div className={styles.npmDownloads}>
+        <Linechart />
+    </div>
+    <div className={styles.prResponseTime}></div>
+    <div className={styles.jenkinsPipeline}></div>
+    <div className={styles.githubPipeline}></div>
+    </div>
+</div>
+**/
