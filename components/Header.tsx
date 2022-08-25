@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from '../styles/Header.module.css';
+import Image from 'next/image'
 
 type HeaderProps = {
     unselectSidebar: () => void
@@ -11,29 +12,30 @@ export default function Header(props: HeaderProps) {
 
     // get user- and projectname 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <nav className={styles.header}>
                 <div className="emptyDiv"></div>
                 <div className={styles.projectName}>
                     <p>{`Overcooked`}</p>
                 </div>
-                <div className={styles.headerButton}>
-                    <ul className={styles.headerList}>
-                        <li>
+                <div className={styles.rightHeader}>
+                    <div className={styles.dropdown}>
+                        <div className={styles.dropdownBtn}>
+                            <Image src="/settings.png" alt="me" width="30" height="30" />
+                        </div>
+                        <div className={styles.dropdownContent}>
                             <Link
                                 href='/settings/user'
                             >
                                 <a onClick={unselectSidebar}>Settings</a>
                             </Link>
-                        </li>
-                        <li>
                             <Link 
                                 href='/logout'
                             >
                                 <a onClick={unselectSidebar}>Logout</a>
                             </Link>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>

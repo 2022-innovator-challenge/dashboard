@@ -13,17 +13,17 @@
     background-color: #6fffd2;
     position: sticky;
     top: 0px;
-    height: 70px;
+    height: 60px;
 }
 
 #sidebar {
     background-color: #3a7dda;
     min-width: 110px;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 60px);
     position: -webkit-sticky;
     position: sticky;
     justify-content: center;
-    top: 70px;
+    top: 60px;
 }
 
 #children {
