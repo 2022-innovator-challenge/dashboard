@@ -25,9 +25,9 @@ export default function Header(props: HeaderProps) {
                         </div>
                         <div className={styles.dropdownContent}>
                             <Link
-                                href='/settings/user'
+                                href='/profile'
                             >
-                                <a onClick={unselectSidebar}>Settings</a>
+                                <a onClick={unselectSidebar}>Profile</a>
                             </Link>
                             <Link 
                                 href='/logout'

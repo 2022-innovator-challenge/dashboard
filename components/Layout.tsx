@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
     const [sidebarElements, setSidebarElements] = useState([
         { name: 'Home', isSelected: true, link: '/' },
-        { name: 'Settings ', isSelected: false, link: '/settings/project' }
+        { name: 'Settings ', isSelected: false, link: '/settings' }
     ]);
 
     function unselectSidebar() {
