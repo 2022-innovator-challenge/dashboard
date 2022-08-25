@@ -10,23 +10,23 @@
 }
 
 #header {
-    background-color: #6fffd2;
     position: sticky;
     top: 0px;
     height: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 #sidebar {
-    background-color: #3a7dda;
     min-width: 110px;
     height: calc(100vh - 60px);
     position: -webkit-sticky;
     position: sticky;
     justify-content: center;
     top: 60px;
+    padding-top: 20px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 #children {
-    background-color: #73ffba;
     width: calc(100% - 110px);
 }

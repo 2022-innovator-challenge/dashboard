@@ -10,7 +10,7 @@ import {
   } from 'chart.js'
 import { Line } from 'react-chartjs-2';
 import useSWR, { mutate } from 'swr';
-
+import styles from '../styles/Linechart.module.css';
 
 type CrawlerResponse = {
     id: number,
@@ -30,9 +30,9 @@ type DatasetElement = {
 }
 
 const fetcher = async (url: string) => {
-    const response = await fetch(url)
+    const response = await fetch(url);
     const responseJson = response.json();
-    return responseJson
+    return responseJson;
 };
 
 const colorPalette = [
@@ -121,7 +121,7 @@ export default function Dashboard() {
       )
       
       return (
-        <div>
+        <div className={styles.lineChart}>
             <Line data={chartData}/>
             <button onClick={() => {
                 mutate(dataEndpoint)

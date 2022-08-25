@@ -1,22 +1,27 @@
 .isSelected {
     font-weight: bold;
+    background-color: rgb(244, 161, 161);
 }
 
 .sidebarList {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
     align-items: stretch;
     justify-content: flex-start;
     text-align: center;
-    height: 100%;
-    display: flex;
     flex-direction: column;
+    height: 100%;
     width: 100%;
 }
 
 .sidebarList > li {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.sidebarList > li:hover {
+    background-color: rgb(210, 217, 224);
 }
 
 .sidebar {
