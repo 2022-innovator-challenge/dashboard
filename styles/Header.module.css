@@ -15,6 +15,7 @@
     display: flex;
     height: 60px;
     font-size: 40px;
+    font-weight: 1000px;
 }
 
 .dropdownBtn {
@@ -51,7 +52,7 @@
 }
 
 .dropdownContent > a {
-    background-color: #ffffff;
+    background-color: #f0ead6;
     transition: background-color 0.3s;
     width: 100%;
     display: flex;

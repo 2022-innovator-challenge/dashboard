@@ -1,3 +1,12 @@
-.lineChart {
+.lineChartContainer {
     display: flex;
+    width: 100%;
+}
+
+.lineChart {
+    width: calc(100% - 60px);
+}
+
+.lineChartContainer > button {
+    min-width: 60px;
 }

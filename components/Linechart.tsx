@@ -145,8 +145,10 @@ export default function Dashboard() {
   );
 
   return (
-    <div className={styles.lineChart}>
-      <Line data={chartData} />
+    <div className={styles.lineChartContainer}>
+      <div className={styles.lineChart}>
+        <Line data={chartData} />
+      </div>
       <button
         onClick={() => {
           mutate(dataEndpoint);
