@@ -1,20 +1,43 @@
 import Link from "next/link";
 import styles from '../styles/Header.module.css';
 import Image from 'next/image'
+import { useState } from "react";
 
-type HeaderProps = {
-    unselectSidebar: () => void
-}
+export default function Header() {
 
-export default function Header(props: HeaderProps) {
+    const [dropdownElements, setDropdownElements] = useState([
+        { name: 'Profile', isSelected: false, link: '/profile' },
+        { name: 'Settings ', isSelected: false, link: '/settings' },
+        { name: 'Logout ', isSelected: false, link: '/logout' }
+    ]);
 
-    const { unselectSidebar } = props;
+    function unselectDropdownElement() {
+    setDropdownElements(
+        dropdownElements.map(element => ({ ...element, isSelected: false }))
+    )
+    }
+
+    function handleSelect(elementName: string) {
+        setDropdownElements(
+            dropdownElements.map(element => (
+              element.name === elementName
+              ? { ...element, isSelected: true } 
+              : { ...element, isSelected: false }
+          ))
+      )
+  }
 
     // get user- and projectname 
     return (
         <div className={styles.wrapper}>
             <nav className={styles.header}>
-                <div className="emptyDiv"></div>
+                <div className={styles.home}>
+                    <Link 
+                        href='/'
+                    >
+                        <a onClick={unselectDropdownElement}><Image src="/home.svg" alt="settings" width="30" height="30" /></a>
+                    </Link>
+                </div>
                 <div className={styles.projectName}>
                     <p>{`Overcooked`}</p>
                 </div>
@@ -24,16 +47,17 @@ export default function Header(props: HeaderProps) {
                             <Image src="/settings.png" alt="settings" width="30" height="30" />
                         </div>
                         <div className={styles.dropdownContent}>
-                            <Link
-                                href='/profile'
-                            >
-                                <a onClick={unselectSidebar}>Profile</a>
-                            </Link>
-                            <Link 
-                                href='/logout'
-                            >
-                                <a onClick={unselectSidebar}>Logout</a>
-                            </Link>
+                            {dropdownElements.map(element =>
+                                <Link 
+                                    href={element.link}
+                                    key={element.name}
+                                >
+                                    <a
+                                        onClick={() => handleSelect(element.name)}
+                                        className={element.isSelected ? styles.isSelected : ""}
+                                    >{element.name}</a>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>

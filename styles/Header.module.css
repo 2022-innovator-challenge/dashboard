@@ -15,7 +15,6 @@
     display: flex;
     height: 60px;
     font-size: 40px;
-    font-weight: 1000px;
 }
 
 .dropdownBtn {
@@ -52,7 +51,6 @@
 }
 
 .dropdownContent > a {
-    background-color: #f0ead6;
     transition: background-color 0.3s;
     width: 100%;
     display: flex;
@@ -78,4 +76,16 @@
 
 .dropdown:hover .dropdownBtn {
     transform:rotate(360deg);
+}
+
+.home {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-left: 40px;
+}
+
+.isSelected {
+    background-color: gray;
 }
