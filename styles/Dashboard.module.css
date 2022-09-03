@@ -19,28 +19,20 @@
     align-items: center;
     justify-content: center;
     border-radius: 15px 0px 0px 15px;
+    filter: invert(100%);
+    padding: 0 20px;
 }
 
 .leftPrImage {
     position: relative;
     min-height: 75px;
     min-width: 75px;
-    filter: invert(100%);
-    margin: 0px 10px;
 }
 
 .leftPrText {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 25px;
-    color: white;
-    padding: 20px;
 }
 
-.leftPrText > p {
-    margin: 0px 25%;
-}
 
 .rightPr {
     min-width: 150px;
