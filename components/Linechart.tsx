@@ -1,15 +1,15 @@
 import {
   Chart as ChartJS,
   CategoryScale,
-  LinearScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  TimeScale
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import styles from '../styles/Linechart.module.css';
 
 type CrawlerResponse = {
@@ -20,13 +20,6 @@ type CrawlerResponse = {
   date: string;
   created_at: string;
   updated_at: string;
-};
-
-type DatasetElement = {
-  label: string;
-  backgroundColor: string;
-  borderColor: string;
-  data: (number | null)[];
 };
 
 const fetcher = async (url: string) => {
@@ -60,15 +53,13 @@ export default function Dashboard() {
   if (!data) return <div>loading...</div>;
 
   const labels = [
-    ...new Set<string>(
-      crawlerResponses.map(crawlerResponse => crawlerResponse.date)
+    ...new Set<Date>(
+      crawlerResponses.map(crawlerResponse => new Date(crawlerResponse.date))
     )
-  ].sort((a, b) => a.localeCompare(b));
+  ];
 
-  const dataSets: DatasetElement[] = [];
-
-  type downloadsAndDate = { date: Date; downloads: number };
-  const parsedResponses = new Map<string, downloadsAndDate[]>();
+  type DownloadsAndDate = { date: Date; downloads: number };
+  const parsedResponses = new Map<string, DownloadsAndDate[]>();
   crawlerResponses.map(crawlerResponse => {
     if (
       parsedResponses.has(
@@ -100,30 +91,37 @@ export default function Dashboard() {
     }
   });
 
-  parsedResponses.forEach(element =>
-    element.sort(function (a: downloadsAndDate, b: downloadsAndDate) {
-      return a.date.getTime() - b.date.getTime();
-    })
-  );
 
+  type DownloadsTimescaleData = {
+    x: string,
+    y: number
+  }
+  
+  type DatasetElement = {
+    label: string;
+    backgroundColor: string;
+    borderColor: string;
+    data: DownloadsTimescaleData[];
+  };
+
+  const dataSets: DatasetElement[] = [];
+  
   let iterator = 0;
-  parsedResponses.forEach((element, key) => {
-    const downloadNumbersArray: (number | null)[] = [];
+  parsedResponses.forEach((downloadData, packageName) => {
+    const downloadEntries: DownloadsTimescaleData[] = [];
 
-    for (let i = 0, j = 0; i < labels.length; i++) {
-      if (element[j]?.date.getTime() === new Date(labels[i]).getTime()) {
-        downloadNumbersArray.push(element[j].downloads);
-        j++;
-      } else {
-        downloadNumbersArray.push(null);
-      }
-    }
+    downloadData.map(downloadDataEntry => {
+      downloadEntries.push({
+        x: downloadDataEntry.date.toString(),
+        y: downloadDataEntry.downloads
+      })
+    })
 
     dataSets.push({
-      label: key,
+      label: packageName,
       backgroundColor: colorPalette[iterator],
       borderColor: colorPalette[iterator],
-      data: downloadNumbersArray
+      data: downloadEntries
     });
     iterator++;
   });
@@ -136,9 +134,9 @@ export default function Dashboard() {
 
   ChartJS.register(
     CategoryScale,
-    LinearScale,
     PointElement,
     LineElement,
+    TimeScale,
     Title,
     Tooltip,
     Legend
@@ -147,15 +145,29 @@ export default function Dashboard() {
   return (
     <div className={styles.lineChartContainer}>
       <div className={styles.lineChart}>
-        <Line data={chartData} />
+        <Line
+          data={chartData}
+          options={{
+            plugins: {
+              title: {
+                display: true,
+                text: "NPM Downloads",
+                font: {
+                  size: 20
+                }
+              }
+            },
+            scales: {
+              x: {
+                type: "time",
+                time: {
+                  tooltipFormat: "DD T"
+                }
+              }
+            }
+          }}
+        />
       </div>
-      <button
-        onClick={() => {
-          mutate(dataEndpoint);
-        }}
-      >
-        Refresh
-      </button>
     </div>
   );
 }

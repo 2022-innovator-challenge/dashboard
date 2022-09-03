@@ -4,9 +4,5 @@
 }
 
 .lineChart {
-    width: calc(100% - 60px);
-}
-
-.lineChartContainer > button {
-    min-width: 60px;
+    width: 100%;
 }
