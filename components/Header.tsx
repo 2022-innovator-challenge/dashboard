@@ -12,9 +12,9 @@ export default function Header() {
     ]);
 
     function unselectDropdownElement() {
-    setDropdownElements(
-        dropdownElements.map(element => ({ ...element, isSelected: false }))
-    )
+        setDropdownElements(
+            dropdownElements.map(element => ({ ...element, isSelected: false }))
+        )
     }
 
     function handleSelect(elementName: string) {
@@ -32,10 +32,10 @@ export default function Header() {
         <div className={styles.wrapper}>
             <nav className={styles.header}>
                 <div className={styles.home}>
-                    <Link 
-                        href='/'
-                    >
-                        <a onClick={unselectDropdownElement}><Image src="/home.svg" alt="settings" width="30" height="30" /></a>
+                    <Link href='/'>
+                        <a onClick={unselectDropdownElement}>
+                            <Image src="/home.svg" alt="settings" width="30" height="30" />
+                        </a>
                     </Link>
                 </div>
                 <div className={styles.projectName}>

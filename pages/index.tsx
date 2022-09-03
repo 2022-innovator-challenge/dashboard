@@ -11,12 +11,20 @@ const Home: NextPage = () => {
         <title>Innovator Dashboard</title>
       </Head>
       <div className={styles.grid}>
-        <div className={`${styles.stars} ${styles.smallCard}`}>Stars</div>
         <div className={`${styles.prs} ${styles.smallCard}`}>
-          <p>Pull Requests</p>
-          <Image src="/git-pull-request.svg" alt="pull-request-image" width="30" height="30" />
-          <p>10</p>
+          <div className={styles.leftPr}>
+            <div className={styles.leftPrImage}>
+              <Image src="/git-pull-request.svg" alt="pull-request-image" layout="fill" />
+            </div>
+            <div className={styles.leftPrText}>
+              <p>Open Pull Requests</p>
+            </div>
+          </div>
+          <div className={styles.rightPr}>
+            <p>10</p>
+          </div>
         </div>
+        <div className={`${styles.stars} ${styles.smallCard}`}>Stars</div>
         <div className={`${styles.issues} ${styles.smallCard}`}>Issues</div>
         <div className={`${styles.npmDownloads} ${styles.chartCard}`}>
           <Linechart />

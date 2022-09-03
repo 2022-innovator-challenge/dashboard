@@ -6,7 +6,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     height: 100%;
-    box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 16px 0px rgba(0,0,0,0.2);
 }
 
 .projectName {
@@ -17,19 +17,25 @@
     font-size: 40px;
 }
 
-.dropdownBtn {
+.rightHeader {
     display: flex;
-    align-items: center;
-    transform:rotate(0deg);
-    transition: all 1.25s ease-in-out;
+    justify-content: flex-end;
+    margin-right: 40px;
 }
 
 .dropdown {
     display: flex;
 }
 
+.dropdownBtn {
+    display: flex;
+    align-items: center;
+    transform: rotate(0deg);
+    transition: all 1.25s ease-in-out;
+}
+
 .dropdownBtn:hover{
-    transform:rotate(360deg);
+    transform: rotate(360deg);
 }
 
 .dropdownContent {
@@ -42,8 +48,7 @@
     background-color: #ffffff;
     top: 50px;
     right: 20px;
-    z-index: 1;
-    padding: 5px;
+    margin: 5px;
     border-radius: 5px;
     transition: visibility 0.4s, opacity 0.4s;
     border: none;
@@ -61,15 +66,8 @@
     background-color: rgb(228, 211, 211);
 }
 
-.rightHeader {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 40px;
-}
-
 .dropdown:hover .dropdownContent {
     display: flex;
-    float: right;
     visibility: visible;
     opacity: 1;
 }
