@@ -24,6 +24,11 @@
 
 .issues {
     grid-area: issues;
+    background-color: #53a158;
+}
+
+.issuesFont {
+    font-size: 29px;
 }
 
 .npmDownloads {

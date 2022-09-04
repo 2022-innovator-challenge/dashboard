@@ -34,7 +34,15 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className={`${styles.issues} ${styles.smallCard}`}>
-          Issues
+          <div className={styles.leftSmallCard}>
+            <div className={`${styles.leftSmallCardImg} ${styles.leftStarImg}`}>
+              <Image src="/issues.svg" alt="Issue Image" layout="fill" />
+            </div>
+          <p className={styles.issuesFont}>Open Issues</p>
+          </div>
+          <div className={styles.rightSmallCard}>
+            <p>26</p>
+          </div>
         </div>
         <div className={`${styles.npmDownloads} ${styles.chartCard}`}>
           <Linechart />
