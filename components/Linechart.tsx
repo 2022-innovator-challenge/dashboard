@@ -53,11 +53,10 @@ export default function Dashboard() {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  const labels = [
-    ...new Set<Date>(
-      crawlerResponses.map(crawlerResponse => new Date(crawlerResponse.date))
-    )
-  ];
+  const labels = crawlerResponses
+    .map(crawlerResponse => crawlerResponse.date)
+    .filter((date, i, array) => array.indexOf(date) === i)
+    .map(date => new Date(date));
 
   type DownloadsAndDate = { date: Date; downloads: number };
   const parsedResponses = new Map<string, DownloadsAndDate[]>();
@@ -92,9 +91,15 @@ export default function Dashboard() {
     }
   });
 
+  parsedResponses.forEach(element =>
+    element.sort(function (a: DownloadsAndDate, b: DownloadsAndDate) {
+      return a.date.getTime() - b.date.getTime();
+    })
+  );
+
 
   type DownloadTimescaleData = {
-    x: string,
+    x: Date,
     y: number
   }
   
@@ -113,7 +118,7 @@ export default function Dashboard() {
 
     downloadData.map(downloadDataEntry => {
       downloadEntries.push({
-        x: downloadDataEntry.date.toString(),
+        x: downloadDataEntry.date,
         y: downloadDataEntry.downloads
       })
     })
@@ -164,9 +169,6 @@ export default function Dashboard() {
                 type: "time",
                 time: {
                   unit: "week",
-                },
-                ticks: {
-
                 }
               }
             }
