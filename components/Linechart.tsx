@@ -1,16 +1,18 @@
 import {
   Chart as ChartJS,
   CategoryScale,
-  LinearScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  TimeScale,
+  LinearScale
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import styles from '../styles/Linechart.module.css';
+import 'chartjs-adapter-moment';
 
 type CrawlerResponse = {
   id: number;
@@ -20,13 +22,6 @@ type CrawlerResponse = {
   date: string;
   created_at: string;
   updated_at: string;
-};
-
-type DatasetElement = {
-  label: string;
-  backgroundColor: string;
-  borderColor: string;
-  data: (number | null)[];
 };
 
 const fetcher = async (url: string) => {
@@ -46,7 +41,6 @@ const colorPalette = [
   'rgb(255, 115, 186)'
 ];
 
-// improve API to work with random orders and missing data entries
 export default function Dashboard() {
   const dataEndpoint =
     'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats';
@@ -59,16 +53,13 @@ export default function Dashboard() {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  const labels = [
-    ...new Set<string>(
-      crawlerResponses.map(crawlerResponse => crawlerResponse.date)
-    )
-  ].sort((a, b) => a.localeCompare(b));
+  const labels = crawlerResponses
+    .map(crawlerResponse => crawlerResponse.date)
+    .filter((date, i, array) => array.indexOf(date) === i)
+    .map(date => new Date(date));
 
-  const dataSets: DatasetElement[] = [];
-
-  type downloadsAndDate = { date: Date; downloads: number };
-  const parsedResponses = new Map<string, downloadsAndDate[]>();
+  type DownloadsAndDate = { date: Date; downloads: number };
+  const parsedResponses = new Map<string, DownloadsAndDate[]>();
   crawlerResponses.map(crawlerResponse => {
     if (
       parsedResponses.has(
@@ -101,33 +92,46 @@ export default function Dashboard() {
   });
 
   parsedResponses.forEach(element =>
-    element.sort(function (a: downloadsAndDate, b: downloadsAndDate) {
+    element.sort(function (a: DownloadsAndDate, b: DownloadsAndDate) {
       return a.date.getTime() - b.date.getTime();
     })
   );
 
-  let iterator = 0;
-  parsedResponses.forEach((element, key) => {
-    const downloadNumbersArray: (number | null)[] = [];
 
-    for (let i = 0, j = 0; i < labels.length; i++) {
-      if (element[j]?.date.getTime() === new Date(labels[i]).getTime()) {
-        downloadNumbersArray.push(element[j].downloads);
-        j++;
-      } else {
-        downloadNumbersArray.push(null);
-      }
-    }
+  type DownloadTimescaleData = {
+    x: Date,
+    y: number
+  }
+  
+  type DatasetElement = {
+    label: string;
+    backgroundColor: string;
+    borderColor: string;
+    data: DownloadTimescaleData[];
+  };
+
+  const dataSets: DatasetElement[] = [];
+  
+  let colorPaletteIterator = 0;
+  parsedResponses.forEach((downloadData, packageName) => {
+    const downloadEntries: DownloadTimescaleData[] = [];
+
+    downloadData.map(downloadDataEntry => {
+      downloadEntries.push({
+        x: downloadDataEntry.date,
+        y: downloadDataEntry.downloads
+      })
+    })
 
     dataSets.push({
-      label: key,
-      backgroundColor: colorPalette[iterator],
-      borderColor: colorPalette[iterator],
-      data: downloadNumbersArray
+      label: packageName,
+      backgroundColor: colorPalette[colorPaletteIterator],
+      borderColor: colorPalette[colorPaletteIterator],
+      data: downloadEntries
     });
-    iterator++;
+    colorPaletteIterator++;
   });
-  iterator = 0;
+  colorPaletteIterator = 0;
 
   const chartData = {
     labels: labels,
@@ -136,9 +140,10 @@ export default function Dashboard() {
 
   ChartJS.register(
     CategoryScale,
-    LinearScale,
     PointElement,
     LineElement,
+    LinearScale,
+    TimeScale,
     Title,
     Tooltip,
     Legend
@@ -147,15 +152,29 @@ export default function Dashboard() {
   return (
     <div className={styles.lineChartContainer}>
       <div className={styles.lineChart}>
-        <Line data={chartData} />
+        <Line
+          data={chartData}
+          options={{
+            plugins: {
+              title: {
+                display: true,
+                text: "NPM Downloads",
+                font: {
+                  size: 20
+                }
+              }
+            },
+            scales: {
+              x: {
+                type: "time",
+                time: {
+                  unit: "week",
+                }
+              }
+            }
+          }}
+        />
       </div>
-      <button
-        onClick={() => {
-          mutate(dataEndpoint);
-        }}
-      >
-        Refresh
-      </button>
     </div>
   );
 }
