@@ -12,20 +12,30 @@ const Home: NextPage = () => {
       </Head>
       <div className={styles.grid}>
         <div className={`${styles.prs} ${styles.smallCard}`}>
-          <div className={styles.leftPr}>
-            <div className={styles.leftPrImage}>
-              <Image src="/git-pull-request.svg" alt="pull-request-image" layout="fill" />
+          <div className={`${styles.leftSmallCard} ${styles.leftPr}`}>
+            <div className={styles.leftSmallCardImg}>
+              <Image src="/git-pull-request.svg" alt="Pull Request Image" layout="fill" />
             </div>
-            <div className={styles.leftPrText}>
-              <p>Open Pull Requests</p>
-            </div>
+            <p>Open Pull Requests</p>
           </div>
-          <div className={styles.rightPr}>
+          <div className={styles.rightSmallCard}>
             <p>10</p>
           </div>
         </div>
-        <div className={`${styles.stars} ${styles.smallCard}`}>Stars</div>
-        <div className={`${styles.issues} ${styles.smallCard}`}>Issues</div>
+        <div className={`${styles.stars} ${styles.smallCard}`}>
+          <div className={styles.leftSmallCard}>
+            <div className={`${styles.leftSmallCardImg} ${styles.leftStarImg}`}>
+              <Image src="/star.svg" alt="Star Image" layout="fill" />
+            </div>
+          <p className={styles.starsFont}>Stars</p>
+          </div>
+          <div className={styles.rightSmallCard}>
+            <p>103</p>
+          </div>
+        </div>
+        <div className={`${styles.issues} ${styles.smallCard}`}>
+          Issues
+        </div>
         <div className={`${styles.npmDownloads} ${styles.chartCard}`}>
           <Linechart />
         </div>

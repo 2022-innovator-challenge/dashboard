@@ -13,39 +13,13 @@
     background-color: #434242;
 }
 
-.leftPr {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px 0px 0px 15px;
-    filter: invert(100%);
-    padding: 0 20px;
-}
-
-.leftPrImage {
-    position: relative;
-    min-height: 75px;
-    min-width: 75px;
-}
-
-.leftPrText {
-    font-size: 25px;
-}
-
-
-.rightPr {
-    min-width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    background-color: white;
-    font-size: 40px;
-}
-
 .stars {
     grid-area: stars;
+    background-color: #fcba03;
+}
+
+.starsFont {
+    font-size: 40px;
 }
 
 .issues {
@@ -72,7 +46,35 @@
     display: flex;
     box-shadow: 0px 0px 8px 4px rgba(0,0,0,0.2);
     border-radius: 15px;
-    min-height: 100px;
+    font-weight: 500;
+}
+
+.leftSmallCard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px 0px 0px 15px;
+    padding: 0 20px;
+    font-size: 25px;
+    filter: invert(100%);
+    gap: 10px;
+}
+
+.leftSmallCardImg {
+    position: relative;
+    min-height: 75px;
+    min-width: 75px;
+}
+
+.rightSmallCard {
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: white;
+    font-size: 40px;
 }
 
 .trendCard {

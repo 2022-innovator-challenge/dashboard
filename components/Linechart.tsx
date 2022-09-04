@@ -7,7 +7,8 @@ import {
   Tooltip,
   Legend,
   TimeScale,
-  LinearScale
+  LinearScale,
+  defaults
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import useSWR from 'swr';
@@ -52,11 +53,6 @@ export default function Dashboard() {
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
-
-  const labels = crawlerResponses
-    .map(crawlerResponse => crawlerResponse.date)
-    .filter((date, i, array) => array.indexOf(date) === i)
-    .map(date => new Date(date));
 
   type DownloadsAndDate = { date: Date; downloads: number };
   const parsedResponses = new Map<string, DownloadsAndDate[]>();
@@ -134,7 +130,6 @@ export default function Dashboard() {
   colorPaletteIterator = 0;
 
   const chartData = {
-    labels: labels,
     datasets: dataSets
   };
 
@@ -149,6 +144,8 @@ export default function Dashboard() {
     Legend
   );
 
+  defaults.font.family = "Inter";
+
   return (
     <div className={styles.lineChartContainer}>
       <div className={styles.lineChart}>
@@ -160,7 +157,8 @@ export default function Dashboard() {
                 display: true,
                 text: "NPM Downloads",
                 font: {
-                  size: 20
+                  size: 20,
+                  weight: "500"
                 }
               }
             },
