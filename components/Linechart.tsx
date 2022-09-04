@@ -6,11 +6,13 @@ import {
   Title,
   Tooltip,
   Legend,
-  TimeScale
+  TimeScale,
+  LinearScale
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import useSWR from 'swr';
 import styles from '../styles/Linechart.module.css';
+import 'chartjs-adapter-moment';
 
 type CrawlerResponse = {
   id: number;
@@ -39,7 +41,6 @@ const colorPalette = [
   'rgb(255, 115, 186)'
 ];
 
-// improve API to work with random orders and missing data entries
 export default function Dashboard() {
   const dataEndpoint =
     'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats';
@@ -92,7 +93,7 @@ export default function Dashboard() {
   });
 
 
-  type DownloadsTimescaleData = {
+  type DownloadTimescaleData = {
     x: string,
     y: number
   }
@@ -101,14 +102,14 @@ export default function Dashboard() {
     label: string;
     backgroundColor: string;
     borderColor: string;
-    data: DownloadsTimescaleData[];
+    data: DownloadTimescaleData[];
   };
 
   const dataSets: DatasetElement[] = [];
   
-  let iterator = 0;
+  let colorPaletteIterator = 0;
   parsedResponses.forEach((downloadData, packageName) => {
-    const downloadEntries: DownloadsTimescaleData[] = [];
+    const downloadEntries: DownloadTimescaleData[] = [];
 
     downloadData.map(downloadDataEntry => {
       downloadEntries.push({
@@ -119,13 +120,13 @@ export default function Dashboard() {
 
     dataSets.push({
       label: packageName,
-      backgroundColor: colorPalette[iterator],
-      borderColor: colorPalette[iterator],
+      backgroundColor: colorPalette[colorPaletteIterator],
+      borderColor: colorPalette[colorPaletteIterator],
       data: downloadEntries
     });
-    iterator++;
+    colorPaletteIterator++;
   });
-  iterator = 0;
+  colorPaletteIterator = 0;
 
   const chartData = {
     labels: labels,
@@ -136,6 +137,7 @@ export default function Dashboard() {
     CategoryScale,
     PointElement,
     LineElement,
+    LinearScale,
     TimeScale,
     Title,
     Tooltip,
@@ -161,7 +163,10 @@ export default function Dashboard() {
               x: {
                 type: "time",
                 time: {
-                  tooltipFormat: "DD T"
+                  unit: "week",
+                },
+                ticks: {
+
                 }
               }
             }
