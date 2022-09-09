@@ -1,40 +1,37 @@
 import type { NextPage } from 'next';
-import useSWR from 'swr';
+import { useState, useEffect } from 'react';
+import useSWR, { mutate } from 'swr';
 
 const ProjectSettings: NextPage = () => {
-  const { data: packages, error } = useSWR('/api/configmaps', fetcher);
+  // const [packages, setPackages] = useState('');
+  const { data, error } = useSWR('/api/configmaps', fetcher);
+  // useEffect(() => {
+  //   setPackages(data || '');
+  // }, [data]);
   if (error) {
     return <div>Failed to load</div>;
   }
-  if (!packages) {
+  if (!data) {
     return <div>Loading...</div>;
-  } else {
-    return (
-      <div>
-        <p>I am the project settings page</p>
-        <p>Enter API keys for Github, npm?, ...</p>
-        <p>Invite new users, show existing users, priviliges?</p>
-
-        <form action="/api/configmaps" method="patch">
-          <label htmlFor="packages">Packages:</label>
-          <input
-            type="text"
-            id="packages"
-            name="packages"
-            required
-            value={packages}
-            onChange={doNothing}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    );
   }
-};
 
-function doNothing() {
-  return;
-}
+  return (
+    <form onSubmit={updatePackages}>
+      <label htmlFor="packages">Packages:</label>
+      <input
+        type="text"
+        id="packages"
+        name="packages"
+        required
+        // value='test'
+        // onChange={e => setPackages(e.target.value)}
+      />
+      <button type="button">+</button>
+      <button type="button">-</button>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
 
 async function fetcher(url: string) {
   const response = await fetch(url);
@@ -42,20 +39,16 @@ async function fetcher(url: string) {
   return data.packages;
 }
 
-// export async function getStaticProps() {
-//   return {
-//     props: (await fetch('/api/configmaps')).json()
-//   };
-// }
+async function updatePackages(e) {
+  e.preventDefault();
+  const packages = e.target.packages.value;
 
-// ProjectSettings.getInitialProps = async () => {
-//   return (await fetch('/api/configmaps')).json();
-// };
+  await fetch('/api/configmaps', {
+    method: 'PATCH',
+    body: JSON.stringify({ packages })
+  });
 
-// async function updatePackages() {
-//   await fetch('/api/configmaps', { method: 'patch', body: {
-//     packages:
-//   } });
-// }
+  mutate('/api/configmaps');
+}
 
 export default ProjectSettings;
