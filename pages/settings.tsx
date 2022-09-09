@@ -1,17 +1,17 @@
 import type { NextPage } from 'next';
-import { useState, useEffect } from 'react';
 import useSWR, { mutate } from 'swr';
 
 const ProjectSettings: NextPage = () => {
-  // const [packages, setPackages] = useState('');
-  const { data, error } = useSWR('/api/configmaps', fetcher);
-  // useEffect(() => {
-  //   setPackages(data || '');
-  // }, [data]);
+  const { data: packages, error } = useSWR('/api/configmaps', fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  });
+
   if (error) {
     return <div>Failed to load</div>;
   }
-  if (!data) {
+  if (!packages) {
     return <div>Loading...</div>;
   }
 
@@ -23,8 +23,7 @@ const ProjectSettings: NextPage = () => {
         id="packages"
         name="packages"
         required
-        // value='test'
-        // onChange={e => setPackages(e.target.value)}
+        defaultValue={packages}
       />
       <button type="button">+</button>
       <button type="button">-</button>
@@ -42,13 +41,18 @@ async function fetcher(url: string) {
 async function updatePackages(e) {
   e.preventDefault();
   const packages = e.target.packages.value;
-
-  await fetch('/api/configmaps', {
-    method: 'PATCH',
-    body: JSON.stringify({ packages })
-  });
-
-  mutate('/api/configmaps');
+  mutate(
+    '/api/configmaps',
+    async () => {
+      const res = await fetch('/api/configmaps', {
+        method: 'PATCH',
+        body: JSON.stringify({ packages })
+      });
+      const { data } = await res.json();
+      return data.packages;
+    },
+    { revalidate: false }
+  );
 }
 
 export default ProjectSettings;
