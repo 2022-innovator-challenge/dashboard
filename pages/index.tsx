@@ -47,7 +47,19 @@ const Home: NextPage = () => {
         <div className={`${styles.npmDownloads} ${styles.chartCard}`}>
           <Linechart />
         </div>
-        <div className={`${styles.prResponseTime} ${styles.trendCard}`}>PR Response Time</div>
+        <div className={`${styles.prResponseTime} ${styles.trendCard}`}>
+          <div className={styles.trendCardText}>
+            <p>Avg. PR Response Time</p>
+            <p>169 Minutes</p>
+          </div>
+          <div className={`${styles.trendCardImg} ${styles.positive}`}>
+            <Image src="/up-arrow.svg" alt="Trend Arrow" layout="fill" />
+          </div>
+          <div className={styles.trendCardSubText}>
+            <p>-12 Minutes</p>
+            <p className={styles.trendCardSubSubText}>compared to the last 7 days</p>
+          </div>
+        </div>
         <div className={`${styles.jenkinsPipeline} ${styles.chartCard}`}>Jenkins Area</div>
         <div className={`${styles.githubPipeline} ${styles.chartCard}`}>Github Area</div>
       </div>
