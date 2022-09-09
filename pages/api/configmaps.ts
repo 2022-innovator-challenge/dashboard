@@ -12,11 +12,20 @@ export default async function handler(
   const token = await readFile(join(mountDir, 'token'));
   const ca = await readFile(join(mountDir, 'ca.crt'));
 
-  const opt = {
+  const opt: RequestInit = {
     method: req.method,
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      authorization: `Bearer ${token}`
+    },
     agent: new Agent({ ca })
   };
+
+  if (req.method === 'PATCH') {
+    opt.body = JSON.stringify({ data: JSON.parse(req.body) });
+    opt.headers['content-type'] = 'application/merge-patch+json';
+  }
+
+  console.log(req);
 
   if (req.method === 'PATCH' || req.method === 'GET') {
     const response = await fetch(
