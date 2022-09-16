@@ -1,8 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Linechart from '../components/Linechart';
-import styles from '../styles/Dashboard.module.css'
-import Image from 'next/image'
+import styles from '../styles/Dashboard.module.css';
+import Image from 'next/image';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const Home: NextPage = () => {
   return (
@@ -14,7 +18,11 @@ const Home: NextPage = () => {
         <div className={`${styles.prs} ${styles.smallCard}`}>
           <div className={`${styles.leftSmallCard} ${styles.leftPr}`}>
             <div className={styles.leftSmallCardImg}>
-              <Image src="/git-pull-request.svg" alt="Pull Request Image" layout="fill" />
+              <Image
+                src="/git-pull-request.svg"
+                alt="Pull Request Image"
+                layout="fill"
+              />
             </div>
             <p>Open Pull Requests</p>
           </div>
@@ -27,7 +35,7 @@ const Home: NextPage = () => {
             <div className={`${styles.leftSmallCardImg} ${styles.leftStarImg}`}>
               <Image src="/star.svg" alt="Star Image" layout="fill" />
             </div>
-          <p className={styles.starsFont}>Stars</p>
+            <p className={styles.starsFont}>Stars</p>
           </div>
           <div className={styles.rightSmallCard}>
             <p>103</p>
@@ -38,7 +46,7 @@ const Home: NextPage = () => {
             <div className={`${styles.leftSmallCardImg} ${styles.leftStarImg}`}>
               <Image src="/issues.svg" alt="Issue Image" layout="fill" />
             </div>
-          <p className={styles.issuesFont}>Open Issues</p>
+            <p className={styles.issuesFont}>Open Issues</p>
           </div>
           <div className={styles.rightSmallCard}>
             <p>26</p>
@@ -57,11 +65,17 @@ const Home: NextPage = () => {
           </div>
           <div className={styles.trendCardSubText}>
             <p>-12 Minutes</p>
-            <p className={styles.trendCardSubSubText}>compared to the last 7 days</p>
+            <p className={styles.trendCardSubSubText}>
+              compared to the last 7 days
+            </p>
           </div>
         </div>
-        <div className={`${styles.jenkinsPipeline} ${styles.chartCard}`}>Jenkins Area</div>
-        <div className={`${styles.githubPipeline} ${styles.chartCard}`}>Github Area</div>
+        <div className={`${styles.jenkinsPipeline} ${styles.chartCard}`}>
+          Jenkins Area
+        </div>
+        <div className={`${styles.githubPipeline} ${styles.chartCard}`}>
+          Github Area
+        </div>
       </div>
     </div>
   );

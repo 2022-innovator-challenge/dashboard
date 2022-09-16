@@ -1,11 +1,22 @@
 import type { NextPage } from 'next';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR, { mutate } from 'swr';
-import { PackageInput } from '../components/PackageInput';
 import { v4 as uuid } from 'uuid';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+interface PackageItem {
+  id: string;
+  name: string;
+}
 
 const ProjectSettings: NextPage = () => {
-  const [packages, setPackages] = useState<{ id: string; name: string }[]>([]);
+  const [packages, setPackages] = useState<PackageItem[]>([]);
 
   const insertPackage = (packageName: string, afterPackageId: string) => {
     const clonedPackages = [...packages];
@@ -37,11 +48,10 @@ const ProjectSettings: NextPage = () => {
   });
 
   useEffect(() => {
-    setPackages(
-      data?.split(',').map(pkg => ({ name: pkg, id: uuid() })) || [
-        { id: uuid(), name: '' }
-      ]
-    );
+    setPackages([
+      ...(data?.split(',').map(pkg => ({ name: pkg, id: uuid() })) || []),
+      { id: uuid(), name: '' }
+    ]);
   }, [data]);
 
   if (error) {
@@ -52,28 +62,41 @@ const ProjectSettings: NextPage = () => {
   }
 
   return (
-    <form
-      onSubmit={e =>
-        updatePackages(
-          e,
-          packages.map(({ name }) => name)
-        )
-      }
-    >
-      <label htmlFor="packages">Packages:</label>
-      {packages.map(({ id, name }) => (
-        <PackageInput
-          name="packages"
-          key={id}
-          value={name}
-          onChange={e => setPackage(e.target.value, id)}
-          onAdd={() => insertPackage('', id)}
-          onRemove={() => removePackage(id)}
-        ></PackageInput>
-      ))}
+    <Container>
+      <Paper>
+        <Stack spacing={2} alignItems="center">
+          {packages.map(({ id, name }, i) => (
+            <Stack key={id} direction="row" alignItems="center" spacing={1}>
+              <TextField
+                variant="outlined"
+                sx={{ width: 250 }}
+                label={`Package ${i + 1}`}
+                name="packages"
+                value={name}
+                autoFocus={!name}
+                onChange={e => setPackage(e.target.value, id)}
+                onBlur={e => {
+                  if (e.target.value && i == packages.length - 1) {
+                    insertPackage('', id);
+                  }
+                }}
+              />
+              <IconButton onClick={() => removePackage(id)}>
+                <DeleteIcon></DeleteIcon>
+              </IconButton>
+            </Stack>
+          ))}
 
-      <button type="submit">Submit</button>
-    </form>
+          <Button
+            variant="outlined"
+            sx={{ mr: 6 }}
+            onClick={() => updatePackages(packages.map(({ name }) => name))}
+          >
+            Submit
+          </Button>
+        </Stack>
+      </Paper>
+    </Container>
   );
 };
 
@@ -83,14 +106,15 @@ async function fetcher(url: string): Promise<string> {
   return data.packages;
 }
 
-async function updatePackages(e: FormEvent, packages: string[]) {
-  e.preventDefault();
+async function updatePackages(packages: string[]) {
   mutate(
     '/api/configmaps',
     async () => {
       const res = await fetch('/api/configmaps', {
         method: 'PATCH',
-        body: JSON.stringify({ packages: packages.join(',') })
+        body: JSON.stringify({
+          packages: packages.filter(pkg => pkg).join(',')
+        })
       });
       const { data } = await res.json();
       return data.packages;
