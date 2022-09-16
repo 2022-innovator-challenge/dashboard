@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export function PackageInput({
   value,
@@ -13,10 +13,17 @@ export function PackageInput({
   onRemove?: React.MouseEventHandler<HTMLButtonElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
+  const inputRef = React.createRef<HTMLInputElement>();
+  useEffect(() => {
+    if (!inputRef.current?.value) {
+      inputRef.current?.focus();
+    }
+  });
   return (
     <div>
       <input
         type="text"
+        ref={inputRef}
         name={name}
         required
         value={value}
