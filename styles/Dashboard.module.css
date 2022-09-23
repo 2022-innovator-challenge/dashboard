@@ -6,6 +6,7 @@
     grid-template-columns: repeat(6, 1fr);
     display: grid;
     gap: 25px;
+    align-items: center;
 }
 
 .prs {
@@ -90,41 +91,42 @@
     box-shadow: 0px 0px 8px 4px rgba(0,0,0,0.2);
     border-radius: 15px;
     background-color: white;
-    display: grid;
-    grid-template-areas:
-    "image text"
-    "subText empty";
-    grid-template-columns: 1fr 2fr;
-    display: grid;
-    gap: 10px;
-    align-items: center;
+    display: flex;
 }
 
-.trendCardImg {
+.trendCardLeftSide {
     height: 100%;
     width: 100%;
-    grid-area: image;
     position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.trendCardRightSide {
+    
 }
 
 .trendCardText {
     font-size: 20px;
     font-weight: 500;
     grid-area: text;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .trendCardSubText {
     grid-area: subText;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
     font-size: 20px;
     font-weight: 500;
+    color: #53a158;
 }
 
 .trendCardSubSubText {
     font-size: 14px;
     font-weight: 400;
+    color: black;
+    opacity: 0.5;
 }
 
 .chartCard {
