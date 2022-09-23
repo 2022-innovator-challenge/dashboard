@@ -8,19 +8,17 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
+import validateNpmPackageName from 'validate-npm-package-name';
 
 interface PackageItem {
   id: string;
   name: string;
-  error?: ValidationError;
+  errors: string[];
 }
 
-enum ValidationError {
-  DuplicateName = 'Duplicate packages',
-  Npm = 'Npm.'
-}
+const duplicateNameError = 'Package names must be unique';
 
 const ProjectSettings: NextPage = () => {
   const [packages, dispatchPackageAction] = useReducer(
@@ -28,97 +26,6 @@ const ProjectSettings: NextPage = () => {
     [],
     initPackages
   );
-
-  // const insertPackage = (packageName: string, afterPackageId: string) => {
-  //   const clonedPackages = [...packages];
-  //   const i = clonedPackages.findIndex(({ id }) => id === afterPackageId);
-  //   clonedPackages.splice(i + 1, 0, { id: uuid(), name: packageName });
-  //   setPackages(clonedPackages);
-  // };
-
-  // const setPackage = (packageName: string, packageId: string) => {
-  //   const clonedPackages = [...packages];
-  //   const pkg = clonedPackages.find(({ id }) => id === packageId);
-  //   if (pkg) {
-  //     const oldPackageName = pkg.name;
-  //     pkg.name = packageName;
-  //     validatePackages(clonedPackages, pkg, oldPackageName);
-  //   }
-  //   setPackages(clonedPackages);
-  // };
-
-  // const removePackage = (packageId: string) => {
-  //   const clonedPackages = [...packages];
-  //   const i = clonedPackages.findIndex(({ id }) => id === packageId);
-  //   const pkg = clonedPackages.splice(i, 1);
-
-  //   // const duplicates = clonedPackages.filter(
-  //   //   ({ id, name }) => id !== pkg.id && name === pkg.name
-  //   // );
-
-  //   setPackages(clonedPackages);
-  // };
-
-  // const validatePackagesNew = (
-  //   clonedPackages: PackageItem[],
-  //   newPackageName: string | undefined,
-  //   oldPackageName: string | undefined
-  // ) => {
-  //   if (newPackageName) {
-  //     const duplicates = clonedPackages.filter(
-  //       ({ name }) => name === newPackageName
-  //     );
-
-  //     duplicates.forEach(pkg => {
-  //       pkg.error =
-  //         duplicates.length > 1 ? ValidationError.DuplicateName : undefined;
-  //     });
-  //   }
-  //   if (oldPackageName) {
-  //     const oldDuplicates = clonedPackages.filter(
-  //       ({ name }) => name === oldPackageName
-  //     );
-
-  //     if (oldDuplicates.length < 2) {
-  //       oldDuplicates.forEach(pkg => {
-  //         if (pkg.error === ValidationError.DuplicateName) {
-  //           pkg.error = undefined;
-  //         }
-  //       });
-  //     }
-  //   }
-  // };
-
-  // const validatePackages = (
-  //   clonedPackages: PackageItem[],
-  //   changedPackage: PackageItem,
-  //   oldPackageName: string
-  // ) => {
-  //   const duplicates = clonedPackages.filter(
-  //     ({ id, name }) => id !== changedPackage.id && name === changedPackage.name
-  //   );
-
-  //   if (duplicates.length) {
-  //     changedPackage.error = ValidationError.DuplicateName;
-  //     duplicates.forEach(pkg => {
-  //       pkg.error = ValidationError.DuplicateName;
-  //     });
-  //   } else {
-  //     changedPackage.error = undefined;
-  //   }
-
-  //   const oldDuplicates = clonedPackages.filter(
-  //     ({ name }) => oldPackageName === name
-  //   );
-
-  //   if (oldDuplicates.length <= 1) {
-  //     oldDuplicates.forEach(pkg => {
-  //       if (pkg.error === ValidationError.DuplicateName) {
-  //         pkg.error = undefined;
-  //       }
-  //     });
-  //   }
-  // };
 
   const { data, error } = useSWR('/api/configmaps', fetcher, {
     revalidateIfStale: false,
@@ -144,16 +51,23 @@ const ProjectSettings: NextPage = () => {
     <Container>
       <Paper sx={{ p: 2 }}>
         <Stack spacing={2} alignItems="center">
-          <Box sx={{ ml: 6 }}>Add npm packages you want to track:</Box>
+          <Typography sx={{ ml: 3 }}>
+            Add npm packages you want to track:
+          </Typography>
           {packages.map((pkg, i) => (
-            <Stack key={pkg.id} direction="row" alignItems="center" spacing={1}>
+            <Stack
+              key={pkg.id}
+              direction="row"
+              alignItems="flex-start"
+              justifyContent="center"
+            >
               <TextField
                 variant="outlined"
                 sx={{ width: 250, ml: 6 }}
                 label={`Package ${i + 1}`}
                 name="packages"
-                error={!!pkg.error}
-                helperText={pkg.error || ' '}
+                error={!!pkg.errors.length}
+                helperText={pkg.errors[0] || ' '}
                 value={pkg.name}
                 autoFocus={!pkg.name}
                 onChange={e =>
@@ -162,14 +76,19 @@ const ProjectSettings: NextPage = () => {
                     payload: { pkg, newName: e.target.value }
                   })
                 }
-                onBlur={e => {
-                  if (e.target.value && i == packages.length - 1) {
+                onBlur={() => {
+                  if (pkg.name && i == packages.length - 1) {
+                    dispatchPackageAction({ type: 'append' });
+                  }
+                }}
+                onKeyUp={({ key }) => {
+                  if (pkg.name && i == packages.length - 1 && key === 'Enter') {
                     dispatchPackageAction({ type: 'append' });
                   }
                 }}
               />
               <IconButton
-                sx={{ mb: 6 }}
+                sx={{ m: 1 }}
                 onClick={() =>
                   dispatchPackageAction({ type: 'delete', payload: { pkg } })
                 }
@@ -181,6 +100,7 @@ const ProjectSettings: NextPage = () => {
 
           <Button
             variant="outlined"
+            disabled={packages.some(({ errors }) => errors.length !== 0)}
             onClick={() => updatePackages(packages.map(({ name }) => name))}
           >
             Submit
@@ -219,7 +139,10 @@ function packageReducer(
     case 'reset':
       return initPackages(payload?.packages);
     case 'append':
-      return [...packages, { id: uuid(), name: payload?.name ?? '' }];
+      return [
+        ...packages,
+        { id: uuid(), name: payload?.name ?? '', errors: [] }
+      ];
     case 'delete':
       return deletePackage(packages, payload);
     case 'update':
@@ -234,7 +157,7 @@ function deletePackage(
   payload: DeletePackageActionPayload
 ): PackageItem[] {
   packages = packages.filter(({ id }) => id !== payload.pkg.id);
-  if (payload.pkg.error === ValidationError.DuplicateName) {
+  if (payload.pkg.errors.includes(duplicateNameError)) {
     packages = revalidateOldDuplicates(packages, payload.pkg.name);
   }
 
@@ -245,14 +168,25 @@ function updatePackage(
   packages: PackageItem[],
   payload: UpdatePackageActionPayload
 ): PackageItem[] {
-  packages = packages.map(pkg => ({
-    ...pkg,
-    ...(pkg.id === payload.pkg.id && { name: payload.newName })
-  }));
+  packages = packages.map(pkg => {
+    if (pkg.id === payload.pkg.id) {
+      pkg.name = payload.newName;
+      if (payload.newName !== '') {
+        const { errors = [], warnings = [] } = validateNpmPackageName(
+          payload.newName
+        );
+        pkg.errors =
+          [...errors, ...warnings].map(
+            (err: string) => err[0].toUpperCase() + err.slice(1)
+          ) || [];
+      }
+    }
+    return pkg;
+  });
 
   packages = validateNewDuplicates(packages, payload.newName);
 
-  if (payload.pkg.error === ValidationError.DuplicateName) {
+  if (payload.pkg.errors.includes(duplicateNameError)) {
     packages = revalidateOldDuplicates(packages, payload.pkg.name);
   }
   return packages;
@@ -262,16 +196,20 @@ function validateNewDuplicates(
   packages: PackageItem[],
   newName: string
 ): PackageItem[] {
-  const duplicates = packages.filter(({ name }) => name === newName);
+  const duplicates = packages.filter(
+    ({ name }) => name === newName && newName !== ''
+  );
 
   if (duplicates.length > 1) {
     duplicates.forEach(pkg => {
-      pkg.error = ValidationError.DuplicateName;
+      if (!pkg.errors.includes(duplicateNameError)) {
+        pkg.errors.unshift(duplicateNameError);
+      }
     });
   } else {
     duplicates.forEach(pkg => {
-      if (pkg.error === ValidationError.DuplicateName) {
-        pkg.error = undefined;
+      if (pkg.errors.includes(duplicateNameError)) {
+        pkg.errors.shift();
       }
     });
   }
@@ -287,8 +225,8 @@ function revalidateOldDuplicates(
 
   if (duplicates.length < 2) {
     duplicates.forEach(pkg => {
-      if (pkg.error === ValidationError.DuplicateName) {
-        pkg.error = undefined;
+      if (pkg.errors.includes(duplicateNameError)) {
+        pkg.errors.shift();
       }
     });
   }
@@ -297,7 +235,7 @@ function revalidateOldDuplicates(
 }
 
 function initPackages(packages: string[] = []): PackageItem[] {
-  return [...packages, ''].map(name => ({ name, id: uuid() }));
+  return [...packages, ''].map(name => ({ name, id: uuid(), errors: [] }));
 }
 
 async function updatePackages(packages: string[]) {
