@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 interface PackageItem {
@@ -63,13 +64,14 @@ const ProjectSettings: NextPage = () => {
 
   return (
     <Container>
-      <Paper>
+      <Paper sx={{ p: 2 }}>
         <Stack spacing={2} alignItems="center">
+          <Box sx={{ ml: 6 }}>Add npm packages you want to track:</Box>
           {packages.map(({ id, name }, i) => (
             <Stack key={id} direction="row" alignItems="center" spacing={1}>
               <TextField
                 variant="outlined"
-                sx={{ width: 250 }}
+                sx={{ width: 250, ml: 6 }}
                 label={`Package ${i + 1}`}
                 name="packages"
                 value={name}
@@ -89,7 +91,6 @@ const ProjectSettings: NextPage = () => {
 
           <Button
             variant="outlined"
-            sx={{ mr: 6 }}
             onClick={() => updatePackages(packages.map(({ name }) => name))}
           >
             Submit
