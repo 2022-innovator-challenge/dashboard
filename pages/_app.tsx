@@ -10,6 +10,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 import type { AppProps } from 'next/app';
 
@@ -45,7 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             color="inherit"
             onClick={openMenu}
             sx={{
-              mr: 2,
+              ml: 2,
               '&:hover': {
                 transform: 'rotate(360deg)',
                 transition: 'all 1.25s ease-in-out'

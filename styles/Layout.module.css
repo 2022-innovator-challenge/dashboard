@@ -1,0 +1,19 @@
+.flexWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#header {
+  position: sticky;
+  top: 0px;
+  height: 60px;
+  background-color: white;
+  z-index: 1;
+}
+
+#children {
+  padding: 20px;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+}

@@ -1,142 +1,143 @@
 .grid {
-    grid-template-areas:
-    "prs prs stars stars issues issues"
-    "npmDownloads npmDownloads npmDownloads npmDownloads prResponseTime prResponseTime"
-    "githubPipeline githubPipeline githubPipeline jenkinsPipeline jenkinsPipeline jenkinsPipeline";
-    grid-template-columns: repeat(6, 1fr);
-    display: grid;
-    gap: 25px;
+  grid-template-areas:
+    'prs prs stars stars issues issues'
+    'npmDownloads npmDownloads npmDownloads npmDownloads prResponseTime prResponseTime'
+    'githubPipeline githubPipeline githubPipeline jenkinsPipeline jenkinsPipeline jenkinsPipeline';
+  grid-template-columns: repeat(6, 1fr);
+  display: grid;
+  gap: 25px;
 }
 
 .prs {
-    grid-area: prs;
-    background-color: #434242;
+  grid-area: prs;
+  /* background-color: #434242; */
 }
 
 .stars {
-    grid-area: stars;
-    background-color: #fcba03;
+  grid-area: stars;
+  background-color: #fcba03;
 }
 
 .starsFont {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .issues {
-    grid-area: issues;
-    background-color: #53a158;
+  grid-area: issues;
+  background-color: #53a158;
 }
 
 .issuesFont {
-    font-size: 29px;
+  font-size: 29px;
 }
 
 .npmDownloads {
-    grid-area: npmDownloads;
+  grid-area: npmDownloads;
 }
 
 .prResponseTime {
-    grid-area: prResponseTime;
+  grid-area: prResponseTime;
 }
 
 .positive {
-    filter: invert(60%) sepia(19%) saturate(852%) hue-rotate(66deg) brightness(91%) contrast(85%);
+  filter: invert(60%) sepia(19%) saturate(852%) hue-rotate(66deg)
+    brightness(91%) contrast(85%);
 }
 
 .githubPipeline {
-    grid-area: githubPipeline;
+  grid-area: githubPipeline;
 }
 
 .jenkinsPipeline {
-    grid-area: jenkinsPipeline;
+  grid-area: jenkinsPipeline;
 }
 
 .smallCard {
-    display: flex;
-    box-shadow: 0px 0px 8px 4px rgba(0,0,0,0.2);
-    border-radius: 15px;
-    font-weight: 500;
+  display: flex;
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  font-weight: 500;
 }
 
 .leftSmallCard {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px 0px 0px 15px;
-    padding: 0 20px;
-    font-size: 25px;
-    filter: invert(100%);
-    gap: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px 0px 0px 15px;
+  padding: 0 20px;
+  font-size: 25px;
+  ;
+  gap: 10px;
 }
 
 .leftSmallCardImg {
-    position: relative;
-    min-height: 75px;
-    min-width: 75px;
+  position: relative;
+  min-height: 75px;
+  min-width: 75px;
 }
 
 .rightSmallCard {
-    min-width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    background-color: white;
-    font-size: 40px;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: white;
+  font-size: 40px;
 }
 
 .trendCard {
-    box-shadow: 0px 0px 8px 4px rgba(0,0,0,0.2);
-    border-radius: 15px;
-    background-color: white;
-    display: grid;
-    grid-template-areas:
-    "image text"
-    "subText empty";
-    grid-template-columns: 1fr 2fr;
-    display: grid;
-    gap: 10px;
-    align-items: center;
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background-color: white;
+  display: grid;
+  grid-template-areas:
+    'image text'
+    'subText empty';
+  grid-template-columns: 1fr 2fr;
+  display: grid;
+  gap: 10px;
+  align-items: center;
 }
 
 .trendCardImg {
-    height: 100%;
-    width: 100%;
-    grid-area: image;
-    position: relative;
+  height: 100%;
+  width: 100%;
+  grid-area: image;
+  position: relative;
 }
 
 .trendCardText {
-    font-size: 20px;
-    font-weight: 500;
-    grid-area: text;
+  font-size: 20px;
+  font-weight: 500;
+  grid-area: text;
 }
 
 .trendCardSubText {
-    grid-area: subText;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 500;
+  grid-area: subText;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .trendCardSubSubText {
-    font-size: 14px;
-    font-weight: 400;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .chartCard {
-    min-width: 600px;
-    padding: 10px;
-    box-shadow: 0px 0px 8px 4px rgba(0,0,0,0.2);
-    border-radius: 15px;
-    display: flex;
-    background-color: white;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100px;
-    position: relative;
+  min-width: 600px;
+  padding: 10px;
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100px;
+  position: relative;
 }
