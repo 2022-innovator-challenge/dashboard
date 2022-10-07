@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Agent } from 'node:https';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import fetch, { RequestInit } from 'node-fetch';
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,10 +23,11 @@ export default async function handler(
 
   if (req.method === 'PATCH') {
     opt.body = JSON.stringify({ data: JSON.parse(req.body) });
-    opt.headers['content-type'] = 'application/merge-patch+json';
+    opt.headers = {
+      ...opt.headers,
+      ['content-type']: 'application/merge-patch+json'
+    };
   }
-
-  console.log(req);
 
   if (req.method === 'PATCH' || req.method === 'GET') {
     const response = await fetch(
@@ -33,7 +35,7 @@ export default async function handler(
       opt
     );
 
-    const data = await response.json();
+    const data = (await response.json()) as Record<string, string>;
 
     res.status(200).json(data);
   } else {
