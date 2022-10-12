@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:docker": "docker build -t kyma-ic-2022.common.repositories.cloud.sap/i519840/dashboard:latest . && docker push kyma-ic-2022.common.repositories.cloud.sap/i519840/dashboard:latest",
+    "deploy:k8s": "kubectl rollout restart deployment/dashboard-deployment"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
