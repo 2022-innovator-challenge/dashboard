@@ -65,7 +65,6 @@ function randomStackedLineChartDatasetElement(label: string, color: string): Sta
 }
 
 function randomStackedLineChartDataSets(): StackedLineChartDatasetElement[] {
-    randomStackedLineChartDatasetElement('test', 'black').data.map(element => console.log(element.x, element.y));
     return [
         randomStackedLineChartDatasetElement('build', 'rgba(0, 91, 110, 0.5)'),
         randomStackedLineChartDatasetElement('test', 'rgba(168, 107, 186, 0.5)'),

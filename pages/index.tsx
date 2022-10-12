@@ -1,80 +1,101 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import LineChart from '../components/LineChart';
 import InfoCard from '../components/InfoCard';
-import styles from '../styles/Dashboard.module.css';
-import Image from 'next/image';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
+import SvgIcon from '@mui/material/SvgIcon';
+import PullRequestIcon from '../public/git-pull-request.svg';
+import JenkinsNormalIcon from '../public/jenkins.svg';
+import JenkinsteinIcon from '../public/jenkinstein.svg';
+import StarIcon from '@material-ui/icons/Star';
+import HelpIcon from '@material-ui/icons/HelpOutline';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import TrendUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import StackedLineChart from '../components/StackedLineChart';
 import { githubStackedLineChartData, jenkinsStackedLineChartData } from '../utils/mock-data';
+import { Stack } from '@mui/system';
 
-
-const jenkinsImgPath = new Date().toLocaleDateString('default', { month: 'long' }) == 'October' ? '/jenkinstein.svg' : '/jenkins.svg';
+const JenkinsIcon =
+  new Date().getMonth() === 9 ? JenkinsNormalIcon : JenkinsteinIcon;
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.dashboard}>
-      <Head>
-        <title>Innovator Dashboard</title>
-      </Head>
-      <div className={styles.grid}>
-        <div className={`${styles.prs} ${styles.smallCard}`}>
-          <InfoCard
-            title="Open Pull Requests"
-            value={10}
-            imageSrc="/git-pull-request.svg"
-            imageBackgroundColor="#434242"
-          />
-        </div>
-        <div className={`${styles.stars} ${styles.smallCard}`}>
-          <InfoCard
-            title="Stars"
-            value={102}
-            imageSrc="/star.svg"
-            imageBackgroundColor="#fcba03"
-          />
-        </div>
-        <div className={`${styles.issues} ${styles.smallCard}`}>
-          <InfoCard
-            title="Open Issues"
-            value={26}
-            imageSrc="/issues.svg"
-            imageBackgroundColor="#53a158"
-          />
-        </div>
-        <div className={`${styles.npmDownloads} ${styles.chartCard}`}>
+    <Grid container spacing={2}>
+      <Grid item xs={3}>
+        <InfoCard
+          title="Open Pull Requests"
+          value={10}
+          imageBackgroundColor="#434242"
+        >
+          <SvgIcon>
+            <PullRequestIcon />
+          </SvgIcon>
+        </InfoCard>
+      </Grid>
+      <Grid item xs={3}>
+        <InfoCard title="Stars" value={102} imageBackgroundColor="#fcba03">
+          <StarIcon />
+        </InfoCard>
+      </Grid>
+      <Grid item xs={3}>
+        <InfoCard title="Open Issues" value={26} imageBackgroundColor="#53a158">
+          <HelpIcon fontSize="large" />
+        </InfoCard>
+      </Grid>
+
+      <Grid item xs={3}>
+        <Paper sx={{ p: 2 }}>
+          <Stack direction="row" alignItems="center">
+            <TrendUpIcon
+              style={{ fontSize: 60, marginLeft: -16 }}
+              htmlColor="#53a158"
+            ></TrendUpIcon>
+            <Stack>
+              <Typography sx={{ mb: -3 }}>PR Response Time</Typography>
+              <Typography
+                color="#53a158"
+                sx={{ fontSize: 20, mt: -3 }}
+                fontWeight="bold"
+              >
+                169 min (-12 min)
+              </Typography>
+            </Stack>
+          </Stack>
+        </Paper>
+      </Grid>
+      <Grid item xs={12}>
+        <Paper sx={{ p: 2 }}>
           <LineChart />
-        </div>
-        <div className={`${styles.prResponseTime} ${styles.trendCard}`}>
-          <div className={styles.trendCardLeftSide}>
-            <div className={`${styles.trendCardImg} ${styles.positive}`}>
-              <Image src="/up-arrow.svg" alt="Trend Arrow" layout="fill" />
-            </div>
-          </div>
-          <div className={styles.trendCardRightSide}>
-            <p className={styles.trendCardTitle}>
-              Avg. PR Response Time
-              <span className={styles.trendCardSubText}> -12 min </span>
-            </p>
-          </div>
-        </div>
-        <div className={`${styles.jenkinsPipeline} ${styles.chartCard}`}>
-          <Image src={jenkinsImgPath} alt="Jenkins" width="120px" height="120px" />
-          <StackedLineChart name='Pipeline Stats' data={jenkinsStackedLineChartData} />
-        </div>
-        <div className={`${styles.githubPipeline} ${styles.chartCard}`}>
-          <Image src="/gh-dark.png" alt="Github" width="120px" height="120px" />
-          <StackedLineChart name='Github Actions' data={githubStackedLineChartData} />
-        </div>
-      </div>
-    </div>
+        </Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Paper sx={{ p: 2 }}>
+          <Stack direction="row" alignItems="center" justifyContent="center">
+            <GitHubIcon />
+            <Typography>Github Area</Typography>
+            <StackedLineChart
+              name="Github Actions"
+              data={githubStackedLineChartData}
+            />
+          </Stack>
+        </Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Paper sx={{ p: 2 }}>
+          <Stack direction="row">
+            <SvgIcon viewBox="0 0 226 312">
+              <JenkinsIcon />
+            </SvgIcon>
+            <Typography align="center">Jenkins Area</Typography>
+            <StackedLineChart
+              name="Pipeline Stats"
+              data={jenkinsStackedLineChartData}
+            />
+          </Stack>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
