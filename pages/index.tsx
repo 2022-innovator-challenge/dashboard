@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Linechart from '../components/Linechart';
+import LineChart from '../components/LineChart';
 import InfoCard from '../components/InfoCard';
 import styles from '../styles/Dashboard.module.css';
 import Image from 'next/image';
@@ -12,6 +12,11 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import StackedLineChart from '../components/StackedLineChart';
+import { jenkinsStackedLineChartData } from '../utils/mock-data';
+
+
+const jenkinsImgPath = new Date().toLocaleDateString('default', { month: 'long' }) == 'October' ? '/jenkinstein.svg' : '/jenkins.svg';
 
 const Home: NextPage = () => {
   return (
@@ -45,7 +50,7 @@ const Home: NextPage = () => {
           />
         </div>
         <div className={`${styles.npmDownloads} ${styles.chartCard}`}>
-          <Linechart />
+          <LineChart />
         </div>
         <div className={`${styles.prResponseTime} ${styles.trendCard}`}>
           <div className={styles.trendCardLeftSide}>
@@ -64,10 +69,11 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className={`${styles.jenkinsPipeline} ${styles.chartCard}`}>
-          Jenkins Area
+          <Image src={jenkinsImgPath} alt="Jenkins" width="120px" height="120px" />
+          <StackedLineChart name='Pipeline Stats' data={jenkinsStackedLineChartData} />
         </div>
         <div className={`${styles.githubPipeline} ${styles.chartCard}`}>
-          Github Area
+          <Image src="/gh-dark.png" alt="Github" width="120px" height="120px" />
         </div>
       </div>
     </div>
