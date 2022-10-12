@@ -25,86 +25,77 @@ const JenkinsIcon =
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.dashboard}>
-      <Head>
-        <title>Innovator Dashboard</title>
-      </Head>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <InfoCard
-            title="Open Pull Requests"
-            value={10}
-            imageBackgroundColor="#434242"
-          >
-            <SvgIcon>
-              <PullRequestIcon />
-            </SvgIcon>
-          </InfoCard>
-        </Grid>
-        <Grid item xs={3}>
-          <InfoCard title="Stars" value={102} imageBackgroundColor="#fcba03">
-            <StarIcon />
-          </InfoCard>
-        </Grid>
-        <Grid item xs={3}>
-          <InfoCard
-            title="Open Issues"
-            value={26}
-            imageBackgroundColor="#53a158"
-          >
-            <HelpIcon fontSize="large" />
-          </InfoCard>
-        </Grid>
-
-        <Grid item xs={3}>
-          <Paper sx={{ p: 2 }}>
-            <Stack direction="row" alignItems="center">
-              <TrendUpIcon
-                style={{ fontSize: 60, marginLeft: -16 }}
-                htmlColor="#53a158"
-              ></TrendUpIcon>
-              <Stack>
-                <Typography sx={{ mb: -3 }}>PR Response Time</Typography>
-                <Typography
-                  color="#53a158"
-                  sx={{ fontSize: 20, mt: -3 }}
-                  fontWeight="bold"
-                >
-                  169 min (-12 min)
-                </Typography>
-              </Stack>
-            </Stack>
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2 }}>
-            <LineChart />
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper sx={{ p: 2 }}>
-            <Stack direction="row" alignItems="center" justifyContent="center">
-              <GitHubIcon />
-              <Typography>Github Area</Typography>
-            </Stack>
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper sx={{ p: 2 }}>
-            <Stack direction="row">
-              <SvgIcon viewBox="0 0 226 312">
-                <JenkinsIcon />
-              </SvgIcon>
-              <Typography align="center">Jenkins Area</Typography>
-              <StackedLineChart
-                name="Pipeline Stats"
-                data={jenkinsStackedLineChartData}
-              />
-            </Stack>
-          </Paper>
-        </Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={3}>
+        <InfoCard
+          title="Open Pull Requests"
+          value={10}
+          imageBackgroundColor="#434242"
+        >
+          <SvgIcon>
+            <PullRequestIcon />
+          </SvgIcon>
+        </InfoCard>
       </Grid>
-    </div>
+      <Grid item xs={3}>
+        <InfoCard title="Stars" value={102} imageBackgroundColor="#fcba03">
+          <StarIcon />
+        </InfoCard>
+      </Grid>
+      <Grid item xs={3}>
+        <InfoCard title="Open Issues" value={26} imageBackgroundColor="#53a158">
+          <HelpIcon fontSize="large" />
+        </InfoCard>
+      </Grid>
+
+      <Grid item xs={3}>
+        <Paper sx={{ p: 2 }}>
+          <Stack direction="row" alignItems="center">
+            <TrendUpIcon
+              style={{ fontSize: 60, marginLeft: -16 }}
+              htmlColor="#53a158"
+            ></TrendUpIcon>
+            <Stack>
+              <Typography sx={{ mb: -3 }}>PR Response Time</Typography>
+              <Typography
+                color="#53a158"
+                sx={{ fontSize: 20, mt: -3 }}
+                fontWeight="bold"
+              >
+                169 min (-12 min)
+              </Typography>
+            </Stack>
+          </Stack>
+        </Paper>
+      </Grid>
+      <Grid item xs={12}>
+        <Paper sx={{ p: 2 }}>
+          <LineChart />
+        </Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Paper sx={{ p: 2 }}>
+          <Stack direction="row" alignItems="center" justifyContent="center">
+            <GitHubIcon />
+            <Typography>Github Area</Typography>
+          </Stack>
+        </Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Paper sx={{ p: 2 }}>
+          <Stack direction="row">
+            <SvgIcon viewBox="0 0 226 312">
+              <JenkinsIcon />
+            </SvgIcon>
+            <Typography align="center">Jenkins Area</Typography>
+            <StackedLineChart
+              name="Pipeline Stats"
+              data={jenkinsStackedLineChartData}
+            />
+          </Stack>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
