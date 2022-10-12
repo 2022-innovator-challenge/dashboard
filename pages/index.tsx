@@ -1,12 +1,17 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Linechart from '../components/Linechart';
+import InfoCard from '../components/InfoCard';
 import styles from '../styles/Dashboard.module.css';
 import Image from 'next/image';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 
 const Home: NextPage = () => {
   return (
@@ -16,41 +21,28 @@ const Home: NextPage = () => {
       </Head>
       <div className={styles.grid}>
         <div className={`${styles.prs} ${styles.smallCard}`}>
-          <div className={`${styles.leftSmallCard} ${styles.leftPr}`}>
-            <div className={styles.leftSmallCardImg}>
-              <Image
-                src="/git-pull-request.svg"
-                alt="Pull Request Image"
-                layout="fill"
-              />
-            </div>
-            <p>Open Pull Requests</p>
-          </div>
-          <div className={styles.rightSmallCard}>
-            <p>10</p>
-          </div>
+          <InfoCard
+            title="Open Pull Requests"
+            value={10}
+            imageSrc="/git-pull-request.svg"
+            imageBackgroundColor="#434242"
+          />
         </div>
         <div className={`${styles.stars} ${styles.smallCard}`}>
-          <div className={styles.leftSmallCard}>
-            <div className={`${styles.leftSmallCardImg} ${styles.leftStarImg}`}>
-              <Image src="/star.svg" alt="Star Image" layout="fill" />
-            </div>
-            <p className={styles.starsFont}>Stars</p>
-          </div>
-          <div className={styles.rightSmallCard}>
-            <p>103</p>
-          </div>
+          <InfoCard
+            title="Stars"
+            value={102}
+            imageSrc="/star.svg"
+            imageBackgroundColor="#fcba03"
+          />
         </div>
         <div className={`${styles.issues} ${styles.smallCard}`}>
-          <div className={styles.leftSmallCard}>
-            <div className={`${styles.leftSmallCardImg} ${styles.leftStarImg}`}>
-              <Image src="/issues.svg" alt="Issue Image" layout="fill" />
-            </div>
-            <p className={styles.issuesFont}>Open Issues</p>
-          </div>
-          <div className={styles.rightSmallCard}>
-            <p>26</p>
-          </div>
+          <InfoCard
+            title="Open Issues"
+            value={26}
+            imageSrc="/issues.svg"
+            imageBackgroundColor="#53a158"
+          />
         </div>
         <div className={`${styles.npmDownloads} ${styles.chartCard}`}>
           <Linechart />

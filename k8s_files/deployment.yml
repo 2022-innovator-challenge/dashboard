@@ -27,6 +27,6 @@ spec:
             limits:
               memory: '512Mi'
               cpu: '1000m'
+      serviceAccountName: dashboard-configurator-bot
       imagePullSecrets:
         - name: kyma-artifactory-registry
-

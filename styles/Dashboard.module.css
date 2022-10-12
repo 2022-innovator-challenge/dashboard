@@ -10,81 +10,82 @@
 }
 
 .prs {
-    grid-area: prs;
-    background-color: #434242;
+  grid-area: prs;
+  /* background-color: #434242; */
 }
 
 .stars {
-    grid-area: stars;
-    background-color: #fcba03;
+  grid-area: stars;
+  background-color: #fcba03;
 }
 
 .starsFont {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .issues {
-    grid-area: issues;
-    background-color: #53a158;
+  grid-area: issues;
+  background-color: #53a158;
 }
 
 .issuesFont {
-    font-size: 29px;
+  font-size: 29px;
 }
 
 .npmDownloads {
-    grid-area: npmDownloads;
+  grid-area: npmDownloads;
 }
 
 .prResponseTime {
-    grid-area: prResponseTime;
+  grid-area: prResponseTime;
 }
 
 .positive {
-    filter: invert(60%) sepia(19%) saturate(852%) hue-rotate(66deg) brightness(91%) contrast(85%);
+  filter: invert(60%) sepia(19%) saturate(852%) hue-rotate(66deg)
+    brightness(91%) contrast(85%);
 }
 
 .githubPipeline {
-    grid-area: githubPipeline;
+  grid-area: githubPipeline;
 }
 
 .jenkinsPipeline {
-    grid-area: jenkinsPipeline;
+  grid-area: jenkinsPipeline;
 }
 
 .smallCard {
-    display: flex;
-    box-shadow: 0px 0px 8px 4px rgba(0,0,0,0.2);
-    border-radius: 15px;
-    font-weight: 500;
+  display: flex;
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  font-weight: 500;
 }
 
 .leftSmallCard {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px 0px 0px 15px;
-    padding: 0 20px;
-    font-size: 25px;
-    filter: invert(100%);
-    gap: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px 0px 0px 15px;
+  padding: 0 20px;
+  font-size: 25px;
+  ;
+  gap: 10px;
 }
 
 .leftSmallCardImg {
-    position: relative;
-    min-height: 75px;
-    min-width: 75px;
+  position: relative;
+  min-height: 75px;
+  min-width: 75px;
 }
 
 .rightSmallCard {
-    min-width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    background-color: white;
-    font-size: 40px;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: white;
+  font-size: 40px;
 }
 
 .trendCard {
@@ -149,15 +150,15 @@
 }
 
 .chartCard {
-    min-width: 600px;
-    padding: 10px;
-    box-shadow: 0px 0px 8px 4px rgba(0,0,0,0.2);
-    border-radius: 15px;
-    display: flex;
-    background-color: white;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100px;
-    position: relative;
+  min-width: 600px;
+  padding: 10px;
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100px;
+  position: relative;
 }
