@@ -110,6 +110,10 @@ const Home: NextPage = () => {
                 <JenkinsIcon />
               </SvgIcon>
               <Typography align="center">Jenkins Area</Typography>
+              <StackedLineChart
+                name="Pipeline Stats"
+                data={jenkinsStackedLineChartData}
+              />
             </Stack>
           </Paper>
         </Grid>

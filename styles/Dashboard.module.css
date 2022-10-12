@@ -104,28 +104,11 @@
 }
 
 .trendCardImg {
-    height: 80px;
-    width: 200px;
+    height: 100px;
+    width: 135px;
     position: relative;
     justify-content: center;
     align-items: center;
-}
-
-.trendCardSubText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    font-weight: 500;
-    color: #53a158;
-}
-
-.trendCardSubSubText {
-    font-size: 20px;
-    font-weight: 400;
-    color: black;
-    opacity: 0.5;
 }
 
 .trendCardRightSide {
@@ -137,16 +120,18 @@
 
 .trendCardTitle {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    font-size: 20px;
+    text-align: left;
+    font-size: 21px;
     font-weight: 500;
+    min-width: 250px;
 }
 
-.trendCardText {
-    font-size: 20px;
-    height: 100%;
-    font-weight: 500;
+.trendCardSubText {
+  font-size: 30px;
+  font-weight: 500;
+  color: #53a158;
 }
 
 .chartCard {
