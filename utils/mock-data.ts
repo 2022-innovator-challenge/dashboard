@@ -7,6 +7,8 @@ type StackedLineChartDatasetElement = {
     label: string,
     backgroundColor: string,
     borderColor: string,
+    pointBackgroundColor: string,
+    pointBorderColor: string,
     data: PipelineTimescaleData[],
     fill: boolean,
 };
@@ -28,28 +30,23 @@ export type StackedBarChartData = {
 
 
 const stackedBarChartLabels = ["build", "test", "deploy"];
-const currentDate = new Date();
 
 function randomTimeScaleData(): PipelineTimescaleData[] {
-    console.log(currentDate);
-    console.log(new Date(currentDate.getDate()-1).getDate());
-    currentDate.setDate(currentDate.getDate()-1);
-    console.log(currentDate.getDate());
     return [
         {
-            x: new Date(currentDate.getDate()-3),
+            x: new Date(new Date().setDate(new Date().getDate()-3)),
             y: Math.floor(Math.random() * 10)
         },
         {
-            x: new Date(currentDate.getDate()-2),
+            x: new Date(new Date().setDate(new Date().getDate()-2)),
             y: Math.floor(Math.random() * 10)
         },
         {
-            x: new Date(currentDate.getDate()-1),
+            x: new Date(new Date().setDate(new Date().getDate()-1)),
             y: Math.floor(Math.random() * 10)
         },
         {
-            x: currentDate,
+            x: new Date(),
             y: Math.floor(Math.random() * 10)
         }
     ]
@@ -60,16 +57,19 @@ function randomStackedLineChartDatasetElement(label: string, color: string): Sta
         label: label,
         backgroundColor: color,
         borderColor: color,
+        pointBackgroundColor: "black",
+        pointBorderColor: "black",
         data: randomTimeScaleData(),
         fill: true
     }
 }
 
 function randomStackedLineChartDataSets(): StackedLineChartDatasetElement[] {
+    randomStackedLineChartDatasetElement('test', 'black').data.map(element => console.log(element.x, element.y));
     return [
-        randomStackedLineChartDatasetElement('build', 'blue'),
-        randomStackedLineChartDatasetElement('test', 'red'),
-        randomStackedLineChartDatasetElement('deploy', 'green'),
+        randomStackedLineChartDatasetElement('build', 'rgba(0, 91, 110, 0.5)'),
+        randomStackedLineChartDatasetElement('test', 'rgba(168, 107, 186, 0.5)'),
+        randomStackedLineChartDatasetElement('deploy', 'rgba(255, 103, 146, 0.5)'),
     ]
 }
 
@@ -87,9 +87,9 @@ function randomStackedBarChartElement(label: string, backgroundColor: string): S
 
 function randomStackedBarChartDataSets(): StackedBarChartDatasetElement[] {
     return [
-        randomStackedBarChartElement('success', 'green'),
-        randomStackedBarChartElement('failure', 'red'),
-        randomStackedBarChartElement('skipped', 'grey')
+        randomStackedBarChartElement('success', 'rgb(0, 91, 110)'),
+        randomStackedBarChartElement('failure', 'rgb(255, 103, 146)'),
+        randomStackedBarChartElement('skipped', 'rgb(114, 110, 183)')
     ]
 }
 

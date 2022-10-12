@@ -13,7 +13,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import StackedLineChart from '../components/StackedLineChart';
-import { jenkinsStackedLineChartData } from '../utils/mock-data';
+import { githubStackedLineChartData, jenkinsStackedLineChartData } from '../utils/mock-data';
 
 
 const jenkinsImgPath = new Date().toLocaleDateString('default', { month: 'long' }) == 'October' ? '/jenkinstein.svg' : '/jenkins.svg';
@@ -71,6 +71,7 @@ const Home: NextPage = () => {
         </div>
         <div className={`${styles.githubPipeline} ${styles.chartCard}`}>
           <Image src="/gh-dark.png" alt="Github" width="120px" height="120px" />
+          <StackedLineChart name='Github Actions' data={githubStackedLineChartData} />
         </div>
       </div>
     </div>
