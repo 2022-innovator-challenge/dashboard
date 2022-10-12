@@ -12,10 +12,11 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import useSWR from 'swr';
-import styles from '../styles/Linechart.module.css';
+import styles from '../styles/LineChart.module.css';
 import 'chartjs-adapter-moment';
+import { parseDownloadsScraper } from '../utils/parseResponses';
 
-type CrawlerResponse = {
+type ScraperResponse = {
   id: number;
   package: string;
   version: string;
@@ -31,106 +32,23 @@ const fetcher = async (url: string) => {
   return responseJson;
 };
 
-const colorPalette = [
-  'rgb(0, 91, 110)',
-  'rgb(4, 102, 140)',
-  'rgb(60, 108, 167)',
-  'rgb(114, 110, 183)',
-  'rgb(168, 107, 186)',
-  'rgb(218, 102, 172)',
-  'rgb(255, 103, 146)',
-  'rgb(255, 115, 186)'
-];
-
-export default function Dashboard() {
+export default function LineChart() {
   const dataEndpoint =
     'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats';
   const { data, error } = useSWR(dataEndpoint, fetcher, {
     refreshInterval: 300000
   });
 
-  const crawlerResponses = data as CrawlerResponse[];
+  const scraperResponses = data as ScraperResponse[];
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  type DownloadsAndDate = { date: Date; downloads: number };
-  const parsedResponses = new Map<string, DownloadsAndDate[]>();
-  crawlerResponses.map(crawlerResponse => {
-    if (
-      parsedResponses.has(
-        `${crawlerResponse.package} Version ${crawlerResponse.version}`
-      )
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const packageData = parsedResponses.get(
-        `${crawlerResponse.package} Version ${crawlerResponse.version}`
-      )!;
-      packageData.push({
-        date: new Date(crawlerResponse.date),
-        downloads: crawlerResponse.downloads
-      });
-      parsedResponses.set(
-        `${crawlerResponse.package} Version ${crawlerResponse.version}`,
-        packageData
-      );
-    } else {
-      parsedResponses.set(
-        `${crawlerResponse.package} Version ${crawlerResponse.version}`,
-        [
-          {
-            date: new Date(crawlerResponse.date),
-            downloads: crawlerResponse.downloads
-          }
-        ]
-      );
-    }
-  });
 
-  parsedResponses.forEach(element =>
-    element.sort(function (a: DownloadsAndDate, b: DownloadsAndDate) {
-      return a.date.getTime() - b.date.getTime();
-    })
-  );
-
-
-  type DownloadTimescaleData = {
-    x: Date,
-    y: number
-  }
-  
-  type DatasetElement = {
-    label: string;
-    backgroundColor: string;
-    borderColor: string;
-    data: DownloadTimescaleData[];
-  };
-
-  const dataSets: DatasetElement[] = [];
-  
-  let colorPaletteIterator = 0;
-  parsedResponses.forEach((downloadData, packageName) => {
-    const downloadEntries: DownloadTimescaleData[] = [];
-
-    downloadData.map(downloadDataEntry => {
-      downloadEntries.push({
-        x: downloadDataEntry.date,
-        y: downloadDataEntry.downloads
-      })
-    })
-
-    dataSets.push({
-      label: packageName,
-      backgroundColor: colorPalette[colorPaletteIterator],
-      borderColor: colorPalette[colorPaletteIterator],
-      data: downloadEntries
-    });
-    colorPaletteIterator++;
-  });
-  colorPaletteIterator = 0;
+  const parsedData = parseDownloadsScraper(scraperResponses);
 
   const chartData = {
-    datasets: dataSets
+    datasets: parsedData
   };
 
   ChartJS.register(
