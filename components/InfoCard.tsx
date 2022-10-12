@@ -18,7 +18,7 @@ export default function InfoCard({
   children: any;
 }) {
   return (
-    <Card sx={{ minWidth: 350, width: '100%' }}>
+    <Card sx={{ minWidth: 150, width: '100%' }}>
       <Stack
         direction="row"
         alignItems="center"
@@ -38,14 +38,11 @@ export default function InfoCard({
         </Typography>
       </Stack>
       <CardContent>
-        <Typography sx={{ fontSize: 20 }} gutterBottom>
-          {title}
-        </Typography>
-
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
+        <Typography sx={{ fontSize: 20 }}>{title}</Typography>
       </CardContent>
+      <CardActions>
+        <Button size="small">Learn More</Button>
+      </CardActions>
     </Card>
   );
 }

@@ -15,7 +15,7 @@ import JenkinsteinIcon from '../public/jenkinstein.svg';
 import StarIcon from '@material-ui/icons/Star';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 import GitHubIcon from '@material-ui/icons/GitHub';
-// import GitHubIcon from '@material-ui/icons/GitHub';
+import TrendUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import StackedLineChart from '../components/StackedLineChart';
 import { jenkinsStackedLineChartData } from '../utils/mock-data';
 import { Stack } from '@mui/system';
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         <title>Innovator Dashboard</title>
       </Head>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <InfoCard
             title="Open Pull Requests"
             value={10}
@@ -41,12 +41,12 @@ const Home: NextPage = () => {
             </SvgIcon>
           </InfoCard>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <InfoCard title="Stars" value={102} imageBackgroundColor="#fcba03">
             <StarIcon />
           </InfoCard>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <InfoCard
             title="Open Issues"
             value={26}
@@ -55,44 +55,30 @@ const Home: NextPage = () => {
             <HelpIcon fontSize="large" />
           </InfoCard>
         </Grid>
-        <Grid item xs={8}>
+
+        <Grid item xs={3}>
           <Paper sx={{ p: 2 }}>
-            <LineChart />
+            <Stack direction="row" alignItems="center">
+              <TrendUpIcon
+                style={{ fontSize: 60, marginLeft: -16 }}
+                htmlColor="#53a158"
+              ></TrendUpIcon>
+              <Stack>
+                <Typography sx={{ mb: -3 }}>PR Response Time</Typography>
+                <Typography
+                  color="#53a158"
+                  sx={{ fontSize: 20, mt: -3 }}
+                  fontWeight="bold"
+                >
+                  169 min (-12 min)
+                </Typography>
+              </Stack>
+            </Stack>
           </Paper>
         </Grid>
-        <Grid item xs={4}>
-          <div className={`${styles.prResponseTime} ${styles.trendCard}`}>
-            <div className={styles.trendCardLeftSide}>
-              <div className={`${styles.trendCardImg} ${styles.positive}`}>
-                <Image src="/up-arrow.svg" alt="Trend Arrow" layout="fill" />
-              </div>
-            </div>
-            <div className={styles.trendCardRightSide}>
-              <p className={styles.trendCardTitle}>
-                Avg. PR Response Time <br />
-              </p>
-              <p className={styles.trendCardSubText}>
-                -12 Minutes <br />
-                <span className={styles.trendCardSubSubText}>
-                  compared to the last 7 days
-                </span>
-              </p>
-            </div>
-          </div>
+        <Grid item xs={12}>
           <Paper sx={{ p: 2 }}>
-            <div className={styles.trendCardText}>
-              <p>Avg. PR Response Time</p>
-              <p>169 Minutes</p>
-            </div>
-            <div className={`${styles.trendCardImg} ${styles.positive}`}>
-              <Image src="/up-arrow.svg" alt="Trend Arrow" layout="fill" />
-            </div>
-            <div className={styles.trendCardSubText}>
-              <p>-12 Minutes</p>
-              <p className={styles.trendCardSubSubText}>
-                compared to the last 7 days
-              </p>
-            </div>
+            <LineChart />
           </Paper>
         </Grid>
         <Grid item xs={6}>
