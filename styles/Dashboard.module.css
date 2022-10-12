@@ -105,23 +105,10 @@
 
 .trendCardImg {
     height: 100px;
-    width: 150px;
+    width: 135px;
     position: relative;
     justify-content: center;
     align-items: center;
-}
-
-.trendCardSubText {
-    font-size: 24px;
-    font-weight: 500;
-    color: #53a158;
-}
-
-.trendCardSubSubText {
-    font-size: 20px;
-    font-weight: 400;
-    color: black;
-    opacity: 0.5;
 }
 
 .trendCardRightSide {
@@ -136,15 +123,15 @@
     flex-direction: column;
     justify-content: center;
     text-align: left;
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 500;
     min-width: 250px;
 }
 
-.trendCardText {
-    font-size: 20px;
-    height: 100%;
-    font-weight: 500;
+.trendCardSubText {
+  font-size: 30px;
+  font-weight: 500;
+  color: #53a158;
 }
 
 .chartCard {
