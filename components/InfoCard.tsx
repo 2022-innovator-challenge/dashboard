@@ -1,21 +1,21 @@
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import { Children, cloneElement, isValidElement, ReactElement } from 'react';
 
 export default function InfoCard({
   title,
   value,
-  imageSrc,
-  imageBackgroundColor
+  imageBackgroundColor,
+  children
 }: {
   title: string;
   value: number;
-  imageSrc: string;
   imageBackgroundColor: string;
+  children: any;
 }) {
   return (
     <Card sx={{ minWidth: 350, width: '100%' }}>
@@ -27,21 +27,13 @@ export default function InfoCard({
           width: '100%',
           height: '100px',
           background: imageBackgroundColor,
-          p: 2
+          p: 2,
+          color: 'white'
         }}
       >
-        <CardMedia
-          component="img"
-          height="100%"
-          image={imageSrc}
-          sx={{
-            'object-fit': 'contain',
-            filter: 'invert(100%)',
-            width: 'auto'
-          }}
-          alt={`${title} Image`}
-        />
-        <Typography color="white" sx={{ fontSize: 50 }} fontWeight="bold">
+        {addWidthHeightToChildren(children)}
+
+        <Typography sx={{ fontSize: 50 }} fontWeight="bold">
           {value}
         </Typography>
       </Stack>
@@ -56,4 +48,16 @@ export default function InfoCard({
       </CardContent>
     </Card>
   );
+}
+
+function addWidthHeightToChildren(children: ReactElement) {
+  return Children.map(children, child => {
+    // Checking isValidElement is the safe way and avoids a
+    // typescript error too.
+    if (isValidElement(child)) {
+      return cloneElement(child, {
+        fontSize: 'large'
+      } as any);
+    }
+  });
 }

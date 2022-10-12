@@ -4,14 +4,14 @@ import Linechart from '../components/Linechart';
 import InfoCard from '../components/InfoCard';
 import styles from '../styles/Dashboard.module.css';
 import Image from 'next/image';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
+
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
+import SvgIcon from '@mui/material/SvgIcon';
+import PullRequestIcon from '../public/git-pull-request.svg';
+import StarIcon from '@material-ui/icons/Star';
+import HelpIcon from '@material-ui/icons/HelpOutline';
 
 const Home: NextPage = () => {
   return (
@@ -19,6 +19,65 @@ const Home: NextPage = () => {
       <Head>
         <title>Innovator Dashboard</title>
       </Head>
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <InfoCard
+            title="Open Pull Requests"
+            value={10}
+            imageBackgroundColor="#434242"
+          >
+            <SvgIcon>
+              <PullRequestIcon />
+            </SvgIcon>
+          </InfoCard>
+        </Grid>
+        <Grid item xs={4}>
+          <InfoCard title="Stars" value={102} imageBackgroundColor="#fcba03">
+            <StarIcon />
+          </InfoCard>
+        </Grid>
+        <Grid item xs={4}>
+          <InfoCard
+            title="Open Issues"
+            value={26}
+            imageBackgroundColor="#53a158"
+          >
+            <HelpIcon fontSize="large" />
+          </InfoCard>
+        </Grid>
+        <Grid item xs={8}>
+          <Paper sx={{ p: 2 }}>
+            <Linechart />
+          </Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper sx={{ p: 2 }}>
+            <div className={styles.trendCardText}>
+              <p>Avg. PR Response Time</p>
+              <p>169 Minutes</p>
+            </div>
+            <div className={`${styles.trendCardImg} ${styles.positive}`}>
+              <Image src="/up-arrow.svg" alt="Trend Arrow" layout="fill" />
+            </div>
+            <div className={styles.trendCardSubText}>
+              <p>-12 Minutes</p>
+              <p className={styles.trendCardSubSubText}>
+                compared to the last 7 days
+              </p>
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper sx={{ p: 2 }}>
+            <Typography align="center">Github Area</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper sx={{ p: 2 }}>
+            <Typography align="center">Jenkins Area</Typography>
+          </Paper>
+        </Grid>
+      </Grid>
       <div className={styles.grid}>
         <div className={`${styles.prs} ${styles.smallCard}`}>
           <InfoCard
