@@ -60,11 +60,8 @@ const Home: NextPage = () => {
           </div>
           <div className={styles.trendCardRightSide}>
             <p className={styles.trendCardTitle}>
-              Avg. PR Response Time <br/>
-            </p>
-            <p className={styles.trendCardSubText}>
-              -12 Minutes <br/>
-              <span className={styles.trendCardSubSubText}>compared to the last 7 days</span>
+              Avg. PR Response Time
+              <span className={styles.trendCardSubText}> -12Minutes </span>
             </p>
           </div>
         </div>
