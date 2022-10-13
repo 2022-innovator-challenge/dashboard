@@ -66,9 +66,9 @@ function randomStackedLineChartDatasetElement(label: string, color: string): Sta
 
 function randomStackedLineChartDataSets(): StackedLineChartDatasetElement[] {
     return [
-        randomStackedLineChartDatasetElement('build', 'rgba(0, 91, 110, 0.5)'),
-        randomStackedLineChartDatasetElement('test', 'rgba(168, 107, 186, 0.5)'),
-        randomStackedLineChartDatasetElement('deploy', 'rgba(255, 103, 146, 0.5)'),
+        randomStackedLineChartDatasetElement('build', '#ffa600'),
+        randomStackedLineChartDatasetElement('test', '#f95d6a'),
+        randomStackedLineChartDatasetElement('deploy', '#003f5c'),
     ]
 }
 
