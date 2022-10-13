@@ -1,96 +1,57 @@
 import {
     Chart as ChartJS,
     CategoryScale,
-    PointElement,
-    LineElement,
+    LinearScale,
+    BarElement,
     Title,
     Tooltip,
     Legend,
-    TimeScale,
-    LinearScale,
     defaults,
-    Filler
   } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import styles from '../styles/LineChart.module.css';
 import 'chartjs-adapter-moment';
 import { StackedBarChartData } from '../utils/mock-data';
   
-  export default function StackedLineChart({ name, data }: { name: string, data: StackedBarChartData }) {
+export default function StackedBarChart({ name, data, xTitle }: { name?: string, data: StackedBarChartData, xTitle: string }) {
 
     ChartJS.register(
-      CategoryScale,
-      PointElement,
-      LineElement,
-      LinearScale,
-      TimeScale,
-      Filler,
-      Title,
-      Tooltip,
-      Legend
+        CategoryScale,
+        LinearScale,
+        BarElement,
+        Title,
+        Tooltip,
+        Legend
     );
   
     defaults.font.family = "Roboto";
   
     return (
-      <div className={styles.lineChartContainer}>
-        <div className={styles.lineChart}>
-            
-          <Bar
-            data={data}
-            options={{
-              plugins: {
+        <Bar
+        data={data}
+        options={{
+            plugins: {
+            title: {
+                display: false,
+                text: name,
+                font: {
+                size: 20,
+                weight: "500"
+                }
+            }
+            },
+            scales: {
+            x: {
+                stacked: true,
                 title: {
-                  display: true,
-                  text: name,
-                  font: {
-                    size: 20,
-                    weight: "500"
-                  }
+                    display: true,
+                    text: xTitle
                 }
-              },
-              scales: {
-                x: {
-                  type: "time",
-                  time: {
-                    unit: "day",
-                  }
-                },
-                y: {
-                    stacked: true,
-                    title: {
-                        display: true,
-                        text: 'minutes'
-                    }
-                }
-              }
-            }}
-          />
-        </div>
-      </div>
+            },
+            y: {
+                stacked: true,
+            }
+            }
+        }}
+        />
     );
   }
-  
-/*
-const config = {
-    type: 'bar',
-    data: data,
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: 'Chart.js Bar Chart - Stacked'
-        },
-      },
-      responsive: true,
-      scales: {
-        x: {
-          stacked: true,
-        },
-        y: {
-          stacked: true
-        }
-      }
-    }
-  };
-*/

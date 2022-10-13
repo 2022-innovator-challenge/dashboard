@@ -64,32 +64,28 @@ export default function LineChart() {
   defaults.font.family = 'Roboto';
 
   return (
-    <div className={styles.lineChartContainer}>
-      <div className={styles.lineChart}>
-        <Line
-          data={chartData}
-          options={{
-            plugins: {
-              title: {
-                display: true,
-                text: 'NPM Downloads',
-                font: {
-                  size: 20,
-                  weight: '500'
-                }
-              }
-            },
-            scales: {
-              x: {
-                type: 'time',
-                time: {
-                  unit: 'week'
-                }
-              }
+    <Line
+      data={chartData}
+      options={{
+        plugins: {
+          title: {
+            display: true,
+            text: 'NPM Downloads',
+            font: {
+              size: 20,
+              weight: '500'
             }
-          }}
-        />
-      </div>
-    </div>
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'week'
+            }
+          }
+        }
+      }}
+    />
   );
 }

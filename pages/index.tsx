@@ -14,11 +14,14 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import TrendUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import StackedLineChart from '../components/StackedLineChart';
 import {
+  githubStackedBarChartData,
   githubStackedLineChartData,
+  jenkinsStackedBarChartData,
   jenkinsStackedLineChartData
 } from '../utils/mock-data';
 import { Stack } from '@mui/system';
 import styles from '../styles/Dashboard.module.css';
+import StackedBarChart from '../components/StackedBarChart';
 
 const JenkinsIcon =
   new Date().getMonth() === 9 ? JenkinsteinIcon : JenkinsNormalIcon;
@@ -81,6 +84,10 @@ const Home: NextPage = () => {
               name="Github Actions"
               data={githubStackedLineChartData}
             />
+            <StackedBarChart
+              data={githubStackedBarChartData}
+              xTitle="Actions"
+            />
           </Stack>
         </Paper>
       </Grid>
@@ -93,6 +100,10 @@ const Home: NextPage = () => {
             <StackedLineChart
               name="Jenkins"
               data={jenkinsStackedLineChartData}
+            />
+            <StackedBarChart
+              data={jenkinsStackedBarChartData}
+              xTitle="Stages"
             />
           </Stack>
         </Paper>

@@ -76,9 +76,9 @@ function randomStackedBarChartElement(label: string, backgroundColor: string): S
     return {
         label: label,
         data: [
-            Math.floor(Math.random() * 10),
-            Math.floor(Math.random() * 10),
-            Math.floor(Math.random() * 10)
+            Math.floor(Math.random() * 10) + 3,
+            Math.floor(Math.random() * 10) + 3,
+            Math.floor(Math.random() * 10) + 3
         ],
         backgroundColor: backgroundColor
     }
@@ -86,9 +86,9 @@ function randomStackedBarChartElement(label: string, backgroundColor: string): S
 
 function randomStackedBarChartDataSets(): StackedBarChartDatasetElement[] {
     return [
-        randomStackedBarChartElement('success', 'rgb(0, 91, 110)'),
-        randomStackedBarChartElement('failure', 'rgb(255, 103, 146)'),
-        randomStackedBarChartElement('skipped', 'rgb(114, 110, 183)')
+        randomStackedBarChartElement('success', '#2f4b7c'),
+        randomStackedBarChartElement('failure', '#f95d6a'),
+        randomStackedBarChartElement('skipped', 'grey')
     ]
 }
 

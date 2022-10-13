@@ -12,7 +12,6 @@ import {
     Filler
   } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import styles from '../styles/LineChart.module.css';
 import 'chartjs-adapter-moment';
 import { StackedLineChartData } from '../utils/mock-data';
   
@@ -33,41 +32,36 @@ import { StackedLineChartData } from '../utils/mock-data';
     defaults.font.family = "Roboto";
   
     return (
-      <div className={styles.lineChartContainer}>
-        <div className={styles.lineChart}>
-            
-          <Line
-            data={data}
-            options={{
-              plugins: {
+        <Line
+        data={data}
+        options={{
+            plugins: {
+            title: {
+                display: true,
+                text: name,
+                font: {
+                size: 20,
+                weight: "500"
+                }
+            }
+            },
+            scales: {
+            x: {
+                type: "time",
+                time: {
+                unit: "day",
+                }
+            },
+            y: {
+                stacked: true,
                 title: {
-                  display: true,
-                  text: name,
-                  font: {
-                    size: 20,
-                    weight: "500"
-                  }
+                    display: true,
+                    text: 'minutes'
                 }
-              },
-              scales: {
-                x: {
-                  type: "time",
-                  time: {
-                    unit: "day",
-                  }
-                },
-                y: {
-                    stacked: true,
-                    title: {
-                        display: true,
-                        text: 'minutes'
-                    }
-                }
-              }
-            }}
-          />
-        </div>
-      </div>
+            }
+            }
+        }}
+        />
     );
   }
   
