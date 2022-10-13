@@ -1,3 +1,5 @@
+import { LineChartDatasetElement } from "./parseResponses";
+
 type PipelineTimescaleData = {
     x: Date,
     y: number
@@ -92,6 +94,15 @@ function randomStackedBarChartDataSets(): StackedBarChartDatasetElement[] {
     ]
 }
 
+function randomLineChartDatasetElement(label: string, color: string): LineChartDatasetElement {
+    return {
+        label: label,
+        backgroundColor: color,
+        borderColor: color,
+        data: randomTimeScaleData(),
+    }
+}
+
 export const githubStackedBarChartData: StackedBarChartData = {
     labels: stackedBarChartLabels,
     datasets: randomStackedBarChartDataSets()
@@ -108,3 +119,7 @@ export const jenkinsStackedBarChartData = {
 export const jenkinsStackedLineChartData = {
     datasets: randomStackedLineChartDataSets()
 };
+
+export const trendLineChartData = {
+    datasets: [randomLineChartDatasetElement('Response Time', '#53a158')]
+}

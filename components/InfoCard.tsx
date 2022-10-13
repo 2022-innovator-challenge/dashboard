@@ -11,11 +11,13 @@ export default function InfoCard({
   value,
   color,
   icon,
+  children
 }: {
   title: string;
   value: string;
   color: string;
   icon: any;
+  children: React.ReactNode
 }) {
   return (
     <Accordion>
@@ -39,7 +41,7 @@ export default function InfoCard({
           </Stack>
         </Stack>
       </AccordionSummary>
-      <AccordionDetails>Details</AccordionDetails>
+      <AccordionDetails>{children}</AccordionDetails>
     </Accordion>
   );
 }

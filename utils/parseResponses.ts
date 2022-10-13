@@ -13,7 +13,7 @@ type DownloadTimescaleData = {
   y: number;
 };
 
-type LineChartDatasetElement = {
+export type LineChartDatasetElement = {
   label: string;
   backgroundColor: string;
   borderColor: string;

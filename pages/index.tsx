@@ -17,7 +17,8 @@ import {
   githubStackedBarChartData,
   githubStackedLineChartData,
   jenkinsStackedBarChartData,
-  jenkinsStackedLineChartData
+  jenkinsStackedLineChartData,
+  trendLineChartData
 } from '../utils/mock-data';
 import { Stack } from '@mui/system';
 import styles from '../styles/Dashboard.module.css';
@@ -43,10 +44,10 @@ const Home: NextPage = () => {
     }
   );
 
-  let chartData;
+  let npmData;
   if (data) {
     const scraperResponses = data as ScraperResponse[];
-    chartData = {
+    npmData = {
       datasets: parseDownloadsScraper(scraperResponses)
     };
   }
@@ -60,7 +61,7 @@ const Home: NextPage = () => {
             <Paper sx={{ p: 2 }}>
               <LineChart 
                 title="NPM Downloads"
-                dataset={chartData}
+                dataset={npmData}
                 error={error}
               />
             </Paper>
@@ -118,25 +119,36 @@ const Home: NextPage = () => {
               </SvgIcon>
             }
             color="#434242"
-          ></InfoCard>
+          >
+            Details
+          </InfoCard>
           <InfoCard
             title="Stars"
             value="102"
             icon={<StarIcon />}
             color="#fcba03"
-          ></InfoCard>
+          >
+            Details
+          </InfoCard>
           <InfoCard
             title="Open Issues"
             value="26"
             icon={<HelpIcon fontSize="large" />}
             color="#53a158"
-          ></InfoCard>
+          >
+            Details
+          </InfoCard>
           <InfoCard
             title="PR Response Time"
             value="169 min (-12 min)"
             icon={<TrendUpIcon fontSize="large" />}
             color="#53a158"
-          ></InfoCard>
+          >
+            <LineChart 
+                dataset={trendLineChartData}
+                legend={false}
+            />
+          </InfoCard>
         </Box>
       </Grid>
     </Grid>
