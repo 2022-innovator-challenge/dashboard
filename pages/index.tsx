@@ -4,7 +4,7 @@ import InfoCard from '../components/InfoCard';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 import SvgIcon from '@mui/material/SvgIcon';
 import PullRequestIcon from '../public/git-pull-request.svg';
 import JenkinsNormalIcon from '../public/jenkins.svg';
@@ -153,8 +153,10 @@ const Home: NextPage = () => {
             color="#434242"
           >
             <Stack>
-              {repoDetails.pulls.map((pull, i) => (
-                <Typography key={i}>{pull.title}</Typography>
+              {repoDetails.pulls.map(({ title, url }, i) => (
+                <Link key={i} href={url}>
+                  {title}
+                </Link>
               ))}
             </Stack>
           </InfoCard>
