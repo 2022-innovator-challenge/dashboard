@@ -12,7 +12,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import useSWR from 'swr';
-import styles from '../styles/LineChart.module.css';
 import 'chartjs-adapter-moment';
 import { parseDownloadsScraper } from '../utils/parseResponses';
 

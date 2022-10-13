@@ -36,29 +36,29 @@ import { StackedLineChartData } from '../utils/mock-data';
         data={data}
         options={{
             plugins: {
-            title: {
-                display: true,
-                text: name,
-                font: {
-                size: 20,
-                weight: "500"
-                }
-            }
-            },
-            scales: {
-            x: {
-                type: "time",
-                time: {
-                unit: "day",
-                }
-            },
-            y: {
-                stacked: true,
                 title: {
                     display: true,
-                    text: 'minutes'
+                    text: name,
+                    font: {
+                        size: 20,
+                        weight: "500"
+                    }
                 }
-            }
+            },
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "day",
+                    }
+                },
+                y: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'minutes'
+                    }
+                }
             }
         }}
         />

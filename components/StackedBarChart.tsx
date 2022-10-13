@@ -30,26 +30,26 @@ export default function StackedBarChart({ name, data, xTitle }: { name?: string,
         data={data}
         options={{
             plugins: {
-            title: {
-                display: false,
-                text: name,
-                font: {
-                size: 20,
-                weight: "500"
+                title: {
+                    display: false,
+                    text: name,
+                    font: {
+                        size: 20,
+                        weight: "500"
+                    }
                 }
-            }
             },
             scales: {
-            x: {
-                stacked: true,
-                title: {
-                    display: true,
-                    text: xTitle
+                x: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: xTitle
+                    }
+                },
+                y: {
+                    stacked: true,
                 }
-            },
-            y: {
-                stacked: true,
-            }
             }
         }}
         />
