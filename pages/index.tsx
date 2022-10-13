@@ -25,14 +25,15 @@ import { Stack } from '@mui/system';
 import styles from '../styles/Dashboard.module.css';
 import StackedBarChart from '../components/StackedBarChart';
 import useSWR from 'swr';
-import { parseDownloadsScraper, ScraperResponse } from '../utils/parseResponses';
+import {
+  parseDownloadsScraper,
+  ScraperResponse
+} from '../utils/parseResponses';
 import { fetcher } from './api-util/fetcher';
 import { useEffect, useState } from 'react';
 
 const JenkinsIcon =
   new Date().getMonth() === 9 ? JenkinsteinIcon : JenkinsNormalIcon;
-
-
 
 interface Pull {
   title: string;
@@ -42,29 +43,30 @@ interface RepoDetails {
   pulls: Pull[];
 }
 const Home: NextPage = () => {
-  const { data, error } = useSWR(
+  const { data: statsData, error: statsError } = useSWR(
     'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats',
-    npmFetcher,
+    fetcher,
     {
       refreshInterval: 300000
     }
   );
 
-  let npmData;
-  if (data) {
-    const scraperResponses = data as ScraperResponse[];
-    npmData = {
-      datasets: parseDownloadsScraper(scraperResponses)
-    };
-  }
+  const npmData = statsData
+    ? {
+        datasets: parseDownloadsScraper(statsData as ScraperResponse[])
+      }
+    : undefined;
 
-  
   const [repoDetails, setRepoDetails] = useState<RepoDetails>({ pulls: [] });
-  const { data: pullsData, error } = useSWR('/api/gh/pulls', fetcher, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  });
+  const { data: pullsData, error: pullsError } = useSWR(
+    '/api/gh/pulls',
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
+  );
 
   useEffect(() => {
     if (pullsData) {
@@ -76,7 +78,7 @@ const Home: NextPage = () => {
     }
   }, [pullsData]);
 
-  if (error) {
+  if (pullsError) {
     return <div>Failed to load</div>;
   }
   if (!pullsData) {
@@ -85,21 +87,14 @@ const Home: NextPage = () => {
 
   return (
     <Grid container spacing={2} columns={4}>
-      <Grid item xs={4}>
-        <div>
-          {repoDetails.pulls.map((pull, i) => (
-            <Typography key={i}>{pull.title}</Typography>
-          ))}
-        </div>
-      </Grid>
       <Grid item xs={3}>
         <Grid container spacing={2} columns={2}>
           <Grid item xs={2}>
             <Paper sx={{ p: 2 }}>
-              <LineChart 
+              <LineChart
                 title="NPM Downloads"
                 dataset={npmData}
-                error={error}
+                error={statsError}
               />
             </Paper>
           </Grid>
@@ -157,7 +152,11 @@ const Home: NextPage = () => {
             }
             color="#434242"
           >
-            Details
+            <Stack>
+              {repoDetails.pulls.map((pull, i) => (
+                <Typography key={i}>{pull.title}</Typography>
+              ))}
+            </Stack>
           </InfoCard>
           <InfoCard
             title="Stars"
@@ -181,10 +180,7 @@ const Home: NextPage = () => {
             icon={<TrendUpIcon fontSize="large" />}
             color="#53a158"
           >
-            <LineChart 
-                dataset={trendLineChartData}
-                legend={false}
-            />
+            <LineChart dataset={trendLineChartData} legend={false} />
           </InfoCard>
         </Box>
       </Grid>
