@@ -15,9 +15,10 @@ import TrendUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import StackedLineChart from '../components/StackedLineChart';
 import { githubStackedLineChartData, jenkinsStackedLineChartData } from '../utils/mock-data';
 import { Stack } from '@mui/system';
+import styles from '../styles/Dashboard.module.css';
 
 const JenkinsIcon =
-  new Date().getMonth() === 9 ? JenkinsNormalIcon : JenkinsteinIcon;
+  new Date().getMonth() === 9 ? JenkinsteinIcon : JenkinsNormalIcon;
 
 const Home: NextPage = () => {
   return (
@@ -71,9 +72,8 @@ const Home: NextPage = () => {
       </Grid>
       <Grid item xs={6}>
         <Paper sx={{ p: 2 }}>
-          <Stack direction="row" alignItems="center" justifyContent="center">
-            <GitHubIcon />
-            <Typography>Github Area</Typography>
+          <Stack direction="column" alignItems="center" justifyContent="center">
+            <GitHubIcon className={styles.chartIcon} />
             <StackedLineChart
               name="Github Actions"
               data={githubStackedLineChartData}
@@ -83,11 +83,10 @@ const Home: NextPage = () => {
       </Grid>
       <Grid item xs={6}>
         <Paper sx={{ p: 2 }}>
-          <Stack direction="row">
-            <SvgIcon viewBox="0 0 226 312">
+          <Stack direction="column" alignItems="center" justifyContent="center">
+            <SvgIcon viewBox="0 0 226 312" className={styles.chartIcon}>
               <JenkinsIcon />
             </SvgIcon>
-            <Typography align="center">Jenkins Area</Typography>
             <StackedLineChart
               name="Pipeline Stats"
               data={jenkinsStackedLineChartData}
