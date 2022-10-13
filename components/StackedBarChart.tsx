@@ -11,12 +11,12 @@ import {
     defaults,
     Filler
   } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import styles from '../styles/LineChart.module.css';
 import 'chartjs-adapter-moment';
-import { StackedLineChartData } from '../utils/mock-data';
+import { StackedBarChartData } from '../utils/mock-data';
   
-  export default function StackedLineChart({ name, data }: { name: string, data: StackedLineChartData }) {
+  export default function StackedLineChart({ name, data }: { name: string, data: StackedBarChartData }) {
 
     ChartJS.register(
       CategoryScale,
@@ -36,7 +36,7 @@ import { StackedLineChartData } from '../utils/mock-data';
       <div className={styles.lineChartContainer}>
         <div className={styles.lineChart}>
             
-          <Line
+          <Bar
             data={data}
             options={{
               plugins: {
@@ -71,3 +71,26 @@ import { StackedLineChartData } from '../utils/mock-data';
     );
   }
   
+/*
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Chart.js Bar Chart - Stacked'
+        },
+      },
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true
+        }
+      }
+    }
+  };
+*/

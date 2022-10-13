@@ -61,7 +61,7 @@ export default function LineChart() {
     Legend
   );
 
-  defaults.font.family = 'Inter';
+  defaults.font.family = 'Roboto';
 
   return (
     <div className={styles.lineChartContainer}>

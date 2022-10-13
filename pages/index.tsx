@@ -91,7 +91,7 @@ const Home: NextPage = () => {
               <JenkinsIcon />
             </SvgIcon>
             <StackedLineChart
-              name="Pipeline Stats"
+              name="Jenkins"
               data={jenkinsStackedLineChartData}
             />
           </Stack>
