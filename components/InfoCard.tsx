@@ -1,59 +1,55 @@
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Children, cloneElement, isValidElement, ReactElement } from 'react';
 
 export default function InfoCard({
   title,
   value,
-  imageBackgroundColor,
-  children
+  color,
+  icon
 }: {
   title: string;
-  value: number;
-  imageBackgroundColor: string;
-  children: any;
+  value: string;
+  color: string;
+  icon: any;
 }) {
   return (
-    <Card sx={{ minWidth: 150, width: '100%' }}>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{
-          width: '100%',
-          height: '100px',
-          background: imageBackgroundColor,
-          p: 2,
-          color: 'white'
-        }}
-      >
-        {addWidthHeightToChildren(children)}
-
-        <Typography sx={{ fontSize: 50 }} fontWeight="bold">
-          {value}
-        </Typography>
-      </Stack>
-      <CardContent>
-        <Typography sx={{ fontSize: 20 }}>{title}</Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    <Accordion>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={1}
+        >
+          {addStyleToIcon(icon, color)}
+          <Stack>
+            <Typography sx={{ mb: -0.5 }}>{title}</Typography>
+            <Typography
+              color={color}
+              sx={{ fontSize: 20, mt: -0.5 }}
+              fontWeight="bold"
+            >
+              {value}
+            </Typography>
+          </Stack>
+        </Stack>
+      </AccordionSummary>
+      <AccordionDetails>Details</AccordionDetails>
+    </Accordion>
   );
 }
 
-function addWidthHeightToChildren(children: ReactElement) {
+function addStyleToIcon(children: ReactElement, htmlColor: string) {
   return Children.map(children, child => {
-    // Checking isValidElement is the safe way and avoids a
-    // typescript error too.
     if (isValidElement(child)) {
       return cloneElement(child, {
-        fontSize: 'large'
+        fontSize: 'large',
+        htmlColor
       } as any);
     }
   });
