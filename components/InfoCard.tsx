@@ -10,7 +10,7 @@ export default function InfoCard({
   title,
   value,
   color,
-  icon
+  icon,
 }: {
   title: string;
   value: string;

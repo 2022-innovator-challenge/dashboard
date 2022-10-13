@@ -22,18 +22,47 @@ import {
 import { Stack } from '@mui/system';
 import styles from '../styles/Dashboard.module.css';
 import StackedBarChart from '../components/StackedBarChart';
+import useSWR from 'swr';
+import { parseDownloadsScraper, ScraperResponse } from '../utils/parseResponses';
 
 const JenkinsIcon =
   new Date().getMonth() === 9 ? JenkinsteinIcon : JenkinsNormalIcon;
 
+const npmFetcher = async (url: string) => {
+  const response = await fetch(url);
+  const responseJson = response.json();
+  return responseJson;
+};
+
 const Home: NextPage = () => {
+  const { data, error } = useSWR(
+    'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats',
+    npmFetcher,
+    {
+      refreshInterval: 300000
+    }
+  );
+
+  let chartData;
+  if (data) {
+    const scraperResponses = data as ScraperResponse[];
+    chartData = {
+      datasets: parseDownloadsScraper(scraperResponses)
+    };
+  }
+
+  
   return (
     <Grid container spacing={2} columns={4}>
       <Grid item xs={3}>
         <Grid container spacing={2} columns={2}>
           <Grid item xs={2}>
             <Paper sx={{ p: 2 }}>
-              <LineChart />
+              <LineChart 
+                title="NPM Downloads"
+                dataset={chartData}
+                error={error}
+              />
             </Paper>
           </Grid>
           <Grid item xs={1}>
@@ -45,7 +74,7 @@ const Home: NextPage = () => {
               >
                 <GitHubIcon className={styles.chartIcon} />
                 <StackedLineChart
-                  name="Github Actions"
+                  title="Github Actions"
                   data={githubStackedLineChartData}
                 />
                 <StackedBarChart
@@ -66,7 +95,7 @@ const Home: NextPage = () => {
                   <JenkinsIcon />
                 </SvgIcon>
                 <StackedLineChart
-                  name="Jenkins"
+                  title="Jenkins"
                   data={jenkinsStackedLineChartData}
                 />
                 <StackedBarChart

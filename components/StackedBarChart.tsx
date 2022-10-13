@@ -12,7 +12,7 @@ import { Bar } from 'react-chartjs-2';
 import 'chartjs-adapter-moment';
 import { StackedBarChartData } from '../utils/mock-data';
   
-export default function StackedBarChart({ name, data, xTitle }: { name?: string, data: StackedBarChartData, xTitle: string }) {
+export default function StackedBarChart({ title, data, xTitle }: { title?: string, data: StackedBarChartData, xTitle: string }) {
 
     ChartJS.register(
         CategoryScale,
@@ -31,8 +31,8 @@ export default function StackedBarChart({ name, data, xTitle }: { name?: string,
         options={{
             plugins: {
                 title: {
-                    display: false,
-                    text: name,
+                    display: (title != undefined),
+                    text: title,
                     font: {
                         size: 20,
                         weight: "500"

@@ -15,7 +15,7 @@ import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-moment';
 import { StackedLineChartData } from '../utils/mock-data';
   
-  export default function StackedLineChart({ name, data }: { name: string, data: StackedLineChartData }) {
+  export default function StackedLineChart({ title, data }: { title: string, data: StackedLineChartData }) {
 
     ChartJS.register(
       CategoryScale,
@@ -38,7 +38,7 @@ import { StackedLineChartData } from '../utils/mock-data';
             plugins: {
                 title: {
                     display: true,
-                    text: name,
+                    text: title,
                     font: {
                         size: 20,
                         weight: "500"

@@ -13,12 +13,16 @@ type DownloadTimescaleData = {
   y: number;
 };
 
-type DatasetElement = {
+type LineChartDatasetElement = {
   label: string;
   backgroundColor: string;
   borderColor: string;
   data: DownloadTimescaleData[];
 };
+
+export type LineChartData = {
+  datasets: LineChartDatasetElement[]
+}
 
 const colorPalette = [
   '#003f5c',
@@ -35,7 +39,7 @@ type DownloadsAndDate = { date: Date; downloads: number };
 
 export function parseDownloadsScraper(
   scraperResponses: ScraperResponse[]
-): DatasetElement[] {
+): LineChartDatasetElement[] {
   const parsedResponses = new Map<string, DownloadsAndDate[]>();
   scraperResponses.map(scraperResponse => {
     const label = packageLabel(scraperResponse);
@@ -54,7 +58,7 @@ export function parseDownloadsScraper(
     })
   );
 
-  const parsedDataSets: DatasetElement[] = [];
+  const parsedDataSets: LineChartDatasetElement[] = [];
 
   let colorPaletteIterator = 0;
   parsedResponses.forEach((downloadData, packageName) => {

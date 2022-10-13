@@ -11,43 +11,14 @@ import {
   defaults
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import useSWR from 'swr';
 import 'chartjs-adapter-moment';
-import { parseDownloadsScraper } from '../utils/parseResponses';
+import { LineChartData } from '../utils/parseResponses';
 
-type ScraperResponse = {
-  id: number;
-  package: string;
-  version: string;
-  downloads: number;
-  date: string;
-  created_at: string;
-  updated_at: string;
-};
+export default function LineChart({ title, dataset, error }: { title?: string, dataset?: LineChartData, error?: Error }) {
 
-const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  const responseJson = response.json();
-  return responseJson;
-};
-
-export default function LineChart() {
-  const { data, error } = useSWR(
-    'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats',
-    fetcher,
-    {
-      refreshInterval: 300000
-    }
-  );
-
-  const scraperResponses = data as ScraperResponse[];
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-
-  const chartData = {
-    datasets: parseDownloadsScraper(scraperResponses)
-  };
+  if (!dataset) return <div>loading...</div>;
 
   ChartJS.register(
     CategoryScale,
@@ -59,17 +30,16 @@ export default function LineChart() {
     Tooltip,
     Legend
   );
-
   defaults.font.family = 'Roboto';
 
   return (
     <Line
-      data={chartData}
+      data={dataset}
       options={{
         plugins: {
           title: {
-            display: true,
-            text: 'NPM Downloads',
+            display: (title != undefined),
+            text: title,
             font: {
               size: 20,
               weight: '500'
