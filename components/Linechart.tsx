@@ -33,22 +33,21 @@ const fetcher = async (url: string) => {
 };
 
 export default function LineChart() {
-  const dataEndpoint =
-    'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats';
-  const { data, error } = useSWR(dataEndpoint, fetcher, {
-    refreshInterval: 300000
-  });
+  const { data, error } = useSWR(
+    'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats',
+    fetcher,
+    {
+      refreshInterval: 300000
+    }
+  );
 
   const scraperResponses = data as ScraperResponse[];
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-
-  const parsedData = parseDownloadsScraper(scraperResponses);
-
   const chartData = {
-    datasets: parsedData
+    datasets: parseDownloadsScraper(scraperResponses)
   };
 
   ChartJS.register(
@@ -62,7 +61,7 @@ export default function LineChart() {
     Legend
   );
 
-  defaults.font.family = "Inter";
+  defaults.font.family = 'Inter';
 
   return (
     <div className={styles.lineChartContainer}>
@@ -73,18 +72,18 @@ export default function LineChart() {
             plugins: {
               title: {
                 display: true,
-                text: "NPM Downloads",
+                text: 'NPM Downloads',
                 font: {
                   size: 20,
-                  weight: "500"
+                  weight: '500'
                 }
               }
             },
             scales: {
               x: {
-                type: "time",
+                type: 'time',
                 time: {
-                  unit: "week",
+                  unit: 'week'
                 }
               }
             }
