@@ -1,10 +1,6 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import LineChart from '../components/LineChart';
 import InfoCard from '../components/InfoCard';
-import styles from '../styles/Dashboard.module.css';
-import Image from 'next/image';
-
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
@@ -17,7 +13,7 @@ import HelpIcon from '@material-ui/icons/HelpOutline';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TrendUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import StackedLineChart from '../components/StackedLineChart';
-import { jenkinsStackedLineChartData } from '../utils/mock-data';
+import { githubStackedLineChartData, jenkinsStackedLineChartData } from '../utils/mock-data';
 import { Stack } from '@mui/system';
 
 const JenkinsIcon =
@@ -78,6 +74,10 @@ const Home: NextPage = () => {
           <Stack direction="row" alignItems="center" justifyContent="center">
             <GitHubIcon />
             <Typography>Github Area</Typography>
+            <StackedLineChart
+              name="Github Actions"
+              data={githubStackedLineChartData}
+            />
           </Stack>
         </Paper>
       </Grid>

@@ -8,7 +8,8 @@ import {
     Legend,
     TimeScale,
     LinearScale,
-    defaults
+    defaults,
+    Filler
   } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import styles from '../styles/LineChart.module.css';
@@ -23,6 +24,7 @@ import { StackedLineChartData } from '../utils/mock-data';
       LineElement,
       LinearScale,
       TimeScale,
+      Filler,
       Title,
       Tooltip,
       Legend
@@ -33,6 +35,7 @@ import { StackedLineChartData } from '../utils/mock-data';
     return (
       <div className={styles.lineChartContainer}>
         <div className={styles.lineChart}>
+            
           <Line
             data={data}
             options={{
@@ -52,6 +55,13 @@ import { StackedLineChartData } from '../utils/mock-data';
                   time: {
                     unit: "day",
                   }
+                },
+                y: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'minutes'
+                    }
                 }
               }
             }}
