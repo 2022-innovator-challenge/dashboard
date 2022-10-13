@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import validateNpmPackageName from 'validate-npm-package-name';
+import { fetcher } from './api-util/fetcher';
 
 interface PackageItem {
   id: string;
@@ -32,18 +33,19 @@ const ProjectSettings: NextPage = () => {
     revalidateOnFocus: false,
     revalidateOnReconnect: false
   });
+  const packageData = data?.data?.packages;
 
   useEffect(() => {
     dispatchPackageAction({
       type: 'reset',
-      payload: { packages: data?.split(',') }
+      payload: { packages: packageData?.split(',') }
     });
-  }, [data]);
+  }, [packageData]);
 
   if (error) {
     return <div>Failed to load</div>;
   }
-  if (!data) {
+  if (!packageData) {
     return <div>Loading...</div>;
   }
 
@@ -111,11 +113,6 @@ const ProjectSettings: NextPage = () => {
   );
 };
 
-async function fetcher(url: string): Promise<string> {
-  const response = await fetch(url);
-  const { data } = await response.json();
-  return data.packages;
-}
 type ResetPackageActionPayload = { packages?: string[] } | undefined;
 type AppendPackageActionPayload = { name?: string } | undefined;
 type DeletePackageActionPayload = { pkg: PackageItem };

@@ -4,6 +4,7 @@ import InfoCard from '../components/InfoCard';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import SvgIcon from '@mui/material/SvgIcon';
 import PullRequestIcon from '../public/git-pull-request.svg';
 import JenkinsNormalIcon from '../public/jenkins.svg';
@@ -25,16 +26,21 @@ import styles from '../styles/Dashboard.module.css';
 import StackedBarChart from '../components/StackedBarChart';
 import useSWR from 'swr';
 import { parseDownloadsScraper, ScraperResponse } from '../utils/parseResponses';
+import { fetcher } from './api-util/fetcher';
+import { useEffect, useState } from 'react';
 
 const JenkinsIcon =
   new Date().getMonth() === 9 ? JenkinsteinIcon : JenkinsNormalIcon;
 
-const npmFetcher = async (url: string) => {
-  const response = await fetch(url);
-  const responseJson = response.json();
-  return responseJson;
-};
 
+
+interface Pull {
+  title: string;
+  url: string;
+}
+interface RepoDetails {
+  pulls: Pull[];
+}
 const Home: NextPage = () => {
   const { data, error } = useSWR(
     'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats',
@@ -53,8 +59,39 @@ const Home: NextPage = () => {
   }
 
   
+  const [repoDetails, setRepoDetails] = useState<RepoDetails>({ pulls: [] });
+  const { data: pullsData, error } = useSWR('/api/gh/pulls', fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  });
+
+  useEffect(() => {
+    if (pullsData) {
+      setRepoDetails({
+        pulls: pullsData.map((pull: any) => ({
+          title: pull.title
+        }))
+      });
+    }
+  }, [pullsData]);
+
+  if (error) {
+    return <div>Failed to load</div>;
+  }
+  if (!pullsData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Grid container spacing={2} columns={4}>
+      <Grid item xs={4}>
+        <div>
+          {repoDetails.pulls.map((pull, i) => (
+            <Typography key={i}>{pull.title}</Typography>
+          ))}
+        </div>
+      </Grid>
       <Grid item xs={3}>
         <Grid container spacing={2} columns={2}>
           <Grid item xs={2}>
