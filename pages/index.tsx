@@ -13,7 +13,10 @@ import HelpIcon from '@material-ui/icons/HelpOutline';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TrendUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import StackedLineChart from '../components/StackedLineChart';
-import { githubStackedLineChartData, jenkinsStackedLineChartData } from '../utils/mock-data';
+import {
+  githubStackedLineChartData,
+  jenkinsStackedLineChartData
+} from '../utils/mock-data';
 import { Stack } from '@mui/system';
 import styles from '../styles/Dashboard.module.css';
 
@@ -53,10 +56,10 @@ const Home: NextPage = () => {
               htmlColor="#53a158"
             ></TrendUpIcon>
             <Stack>
-              <Typography sx={{ mb: -3 }}>PR Response Time</Typography>
+              <Typography sx={{ mb: -0.5 }}>PR Response Time</Typography>
               <Typography
                 color="#53a158"
-                sx={{ fontSize: 20, mt: -3 }}
+                sx={{ fontSize: 20, mt: -0.5 }}
                 fontWeight="bold"
               >
                 169 min (-12 min)
