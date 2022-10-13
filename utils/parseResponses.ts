@@ -38,34 +38,14 @@ export function parseDownloadsScraper(
 ): DatasetElement[] {
   const parsedResponses = new Map<string, DownloadsAndDate[]>();
   scraperResponses.map(scraperResponse => {
-    if (
-      parsedResponses.has(
-        `${scraperResponse.package} (v${scraperResponse.version})`
-      )
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const packageData = parsedResponses.get(
-        `${scraperResponse.package} (v${scraperResponse.version})`
-      )!;
-      packageData.push({
+    const label = packageLabel(scraperResponse);
+    parsedResponses.set(label, [
+      ...(parsedResponses.get(label) || []),
+      {
         date: new Date(scraperResponse.date),
         downloads: scraperResponse.downloads
-      });
-      parsedResponses.set(
-        `${scraperResponse.package} (v${scraperResponse.version})`,
-        packageData
-      );
-    } else {
-      parsedResponses.set(
-        `${scraperResponse.package} (v${scraperResponse.version})`,
-        [
-          {
-            date: new Date(scraperResponse.date),
-            downloads: scraperResponse.downloads
-          }
-        ]
-      );
-    }
+      }
+    ]);
   });
 
   parsedResponses.forEach(element =>
@@ -97,4 +77,8 @@ export function parseDownloadsScraper(
   });
 
   return parsedDataSets;
+}
+
+function packageLabel(scraperResponse: ScraperResponse): string {
+  return `${scraperResponse.package} (v${scraperResponse.version})`;
 }
