@@ -14,7 +14,7 @@ import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-moment';
 import { LineChartData } from '../utils/parseResponses';
 
-export default function LineChart({ title, dataset, error, legend=true }: { title?: string, dataset?: LineChartData, error?: Error, legend?: boolean }) {
+export default function LineChart({ title, dataset, error, legend=true, yTitle }: { title?: string, dataset?: LineChartData, error?: Error, legend?: boolean, yTitle?: string }) {
 
 
   if (error) return <div>failed to load</div>;
@@ -54,6 +54,12 @@ export default function LineChart({ title, dataset, error, legend=true }: { titl
             type: 'time',
             time: {
               unit: 'week'
+            }
+          },
+          y: {
+            title: {
+              display: (yTitle != undefined),
+              text: yTitle
             }
           }
         }

@@ -39,8 +39,18 @@ interface Pull {
   title: string;
   url: string;
 }
+
+interface Issue {
+  title: string;
+  url: string;
+}
+
 interface RepoDetails {
   pulls: Pull[];
+}
+
+interface IssueDetails {
+  issues: Issue[];
 }
 const Home: NextPage = () => {
   const { data: statsData, error: statsError } = useSWR(
@@ -146,7 +156,7 @@ const Home: NextPage = () => {
         <Box>
           <InfoCard
             title="Open Pull Requests"
-            value="10"
+            value="9"
             icon={
               <SvgIcon>
                 <PullRequestIcon />
@@ -156,7 +166,7 @@ const Home: NextPage = () => {
           >
             <Stack>
               {repoDetails.pulls.map(({ title, url }, i) => (
-                <Link key={i} href={url}>
+                <Link key={i} href={url} target='_blank' rel="noopener">
                   {title}
                 </Link>
               ))}
@@ -164,19 +174,39 @@ const Home: NextPage = () => {
           </InfoCard>
           <InfoCard
             title="Stars"
-            value="102"
+            value="111"
             icon={<StarIcon />}
             color="#fcba03"
           >
-            Details
+            <Stack>
+              <Link href="https://github.com/vinibar" target='_blank' rel="noopener">
+                vinibar
+              </Link>
+              <Link href="https://github.com/zachmichael" target='_blank' rel="noopener">
+                zachmichael
+              </Link>
+              <Link href="https://github.com/dimitrovnikolay" target='_blank' rel="noopener">
+                dimitrovnikolay
+              </Link>
+            </Stack>
           </InfoCard>
           <InfoCard
             title="Open Issues"
-            value="26"
+            value="20"
             icon={<HelpIcon fontSize="large" />}
             color="#53a158"
           >
-            Details
+            <Stack>
+              <Link href="https://github.com/SAP/cloud-sdk-js/issues/2950" sx={{ mb: 0.5 }} target='_blank' rel="noopener">
+                  How to use @sap-cloud-sdk/generator services in Angular project?
+              </Link>
+              <Link href="https://github.com/SAP/cloud-sdk-js/issues/2876" sx={{ mb: 0.5 }} target='_blank' rel="noopener">
+                Catch Unresolved Promises
+              </Link>
+              <Link href="https://github.com/SAP/cloud-sdk-js/issues/2853" sx={{ mb: 0.5 }} target='_blank' rel="noopener">
+                Regd support for On-Premise Connectivity in SAP BTP Kyma runtime
+              </Link>
+            </Stack>
           </InfoCard>
           <InfoCard
             title="PR Response Time"
