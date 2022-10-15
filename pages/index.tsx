@@ -40,18 +40,10 @@ interface Pull {
   url: string;
 }
 
-interface Issue {
-  title: string;
-  url: string;
-}
-
 interface RepoDetails {
   pulls: Pull[];
 }
 
-interface IssueDetails {
-  issues: Issue[];
-}
 const Home: NextPage = () => {
   const { data: statsData, error: statsError } = useSWR(
     'https://downloadstats.c2aecf0.kyma.ondemand.com/download-stats',
