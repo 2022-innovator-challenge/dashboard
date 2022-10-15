@@ -113,6 +113,7 @@ const Home: NextPage = () => {
                 <StackedBarChart
                   data={githubStackedBarChartData}
                   xTitle="Actions"
+                  yTitle="Runs"
                 />
               </Stack>
             </Paper>
@@ -134,6 +135,7 @@ const Home: NextPage = () => {
                 <StackedBarChart
                   data={jenkinsStackedBarChartData}
                   xTitle="Stages"
+                  yTitle="Runs"
                 />
               </Stack>
             </Paper>
@@ -182,7 +184,10 @@ const Home: NextPage = () => {
             icon={<TrendUpIcon fontSize="large" />}
             color="#53a158"
           >
-            <LineChart dataset={trendLineChartData} legend={false} />
+          <LineChart 
+            dataset={trendLineChartData}
+            legend={false} 
+          />
           </InfoCard>
         </Box>
       </Grid>

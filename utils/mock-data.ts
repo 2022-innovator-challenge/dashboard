@@ -54,6 +54,31 @@ function randomTimeScaleData(): PipelineTimescaleData[] {
     ]
 }
 
+function randomDownwardsTimeScaleData(): PipelineTimescaleData[] {
+
+    const baseLine = Math.floor(Math.random() * 10) + 1
+
+    return [
+        {
+            x: new Date(new Date().setDate(new Date().getDate()-3)),
+            y: Math.floor(Math.random() * 10) + baseLine
+        },
+        {
+            x: new Date(new Date().setDate(new Date().getDate()-2)),
+            y: Math.floor(Math.random() * 10) + baseLine
+        },
+        {
+            x: new Date(new Date().setDate(new Date().getDate()-1)),
+            y: Math.floor(Math.random() * 10) + 1 + baseLine
+        },
+        {
+            x: new Date(),
+            y: baseLine
+        }
+    ]
+}
+
+
 function randomStackedLineChartDatasetElement(label: string, color: string): StackedLineChartDatasetElement {
     return {
         label: label,
@@ -61,7 +86,7 @@ function randomStackedLineChartDatasetElement(label: string, color: string): Sta
         borderColor: color,
         pointBackgroundColor: "black",
         pointBorderColor: "black",
-        data: randomTimeScaleData(),
+        data: randomDownwardsTimeScaleData(),
         fill: true
     }
 }
@@ -103,9 +128,93 @@ function randomLineChartDatasetElement(label: string, color: string): LineChartD
     }
 }
 
+const githubSpecificStackedBarChartDataSets: StackedBarChartDatasetElement[] = [
+    {
+        label: 'success',
+        data: [
+            27,
+            23,
+            20
+        ],
+        backgroundColor: '#2f4b7c'
+    },
+    {
+        label: 'failure',
+        data: [
+            3,
+            4,
+            3
+        ],
+        backgroundColor: '#f95d6a'
+    },
+    {
+        label: 'skipped',
+        data: [
+            0,
+            3,
+            7
+        ],
+        backgroundColor: 'grey'
+    }
+]
+
+const jenkinsSpecificStackedBarChartDataSets: StackedBarChartDatasetElement[] = [
+    {
+        label: 'success',
+        data: [
+            30,
+            15,
+            10
+        ],
+        backgroundColor: '#2f4b7c'
+    },
+    {
+        label: 'failure',
+        data: [
+            10,
+            15,
+            5
+        ],
+        backgroundColor: '#f95d6a'
+    },
+    {
+        label: 'skipped',
+        data: [
+            0,
+            10,
+            25
+        ],
+        backgroundColor: 'grey'
+    }
+]
+
+const trendSpecificLineChartData = {
+    label: 'Response Time',
+    backgroundColor: '#53a158',
+    borderColor: '#53a158',
+    data: [
+        {
+            x: new Date(new Date().setDate(new Date().getDate()-3)),
+            y: 182
+        },
+        {
+            x: new Date(new Date().setDate(new Date().getDate()-2)),
+            y: 184
+        },
+        {
+            x: new Date(new Date().setDate(new Date().getDate()-1)),
+            y: 181
+        },
+        {
+            x: new Date(),
+            y: 169
+        }
+    ]
+}
+
 export const githubStackedBarChartData: StackedBarChartData = {
     labels: stackedBarChartLabels,
-    datasets: randomStackedBarChartDataSets()
+    datasets: githubSpecificStackedBarChartDataSets
 }
 
 export const githubStackedLineChartData = {
@@ -114,12 +223,12 @@ export const githubStackedLineChartData = {
 
 export const jenkinsStackedBarChartData = {
     labels: stackedBarChartLabels,
-    datasets: randomStackedBarChartDataSets()
+    datasets: jenkinsSpecificStackedBarChartDataSets
 };
 export const jenkinsStackedLineChartData = {
     datasets: randomStackedLineChartDataSets()
 };
 
 export const trendLineChartData = {
-    datasets: [randomLineChartDatasetElement('Response Time', '#53a158')]
+    datasets: [trendSpecificLineChartData]
 }
