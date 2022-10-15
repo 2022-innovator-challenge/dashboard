@@ -6,7 +6,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import fetch, { RequestInit } from 'node-fetch';
-import { getUrl, validateRequest } from '../../api-util/gh';
+import { getUrl, validateRequest } from '../../../utils/api-util/gh';
 
 export default async function handler(
   req: NextApiRequest,

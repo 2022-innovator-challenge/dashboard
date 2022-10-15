@@ -29,7 +29,7 @@ import {
   parseDownloadsScraper,
   ScraperResponse
 } from '../utils/parseResponses';
-import { fetcher } from './api-util/fetcher';
+import { fetcher } from '../utils/api-util/fetcher';
 import { useEffect, useState } from 'react';
 
 const JenkinsIcon =
@@ -158,7 +158,7 @@ const Home: NextPage = () => {
           >
             <Stack>
               {repoDetails.pulls.map(({ title, url }, i) => (
-                <Link key={i} href={url} target='_blank' rel="noopener">
+                <Link key={i} href={url} target='_blank' rel="noopener" sx={{ mb: 0.5  }}>
                   {title}
                 </Link>
               ))}
@@ -171,13 +171,13 @@ const Home: NextPage = () => {
             color="#fcba03"
           >
             <Stack>
-              <Link href="https://github.com/vinibar" target='_blank' rel="noopener">
+              <Link href="https://github.com/vinibar" target='_blank' rel="noopener" sx={{ mb: 0.5  }}>
                 vinibar
               </Link>
-              <Link href="https://github.com/zachmichael" target='_blank' rel="noopener">
+              <Link href="https://github.com/zachmichael" target='_blank' rel="noopener" sx={{ mb: 0.5  }}>
                 zachmichael
               </Link>
-              <Link href="https://github.com/dimitrovnikolay" target='_blank' rel="noopener">
+              <Link href="https://github.com/dimitrovnikolay" target='_blank' rel="noopener" sx={{ mb: 0.5  }}>
                 dimitrovnikolay
               </Link>
             </Stack>

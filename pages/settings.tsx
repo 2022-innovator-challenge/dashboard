@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import validateNpmPackageName from 'validate-npm-package-name';
-import { fetcher } from './api-util/fetcher';
+import { fetcher } from '../utils/api-util/fetcher';
 
 interface PackageItem {
   id: string;
